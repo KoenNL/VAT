@@ -1,14 +1,14 @@
 package Domain;
 
 public class RectangularPrism extends Shape {
-    private final String type = "rectangularPrism";
+
     private double length;
     private double width;
     private double height;
 
     /**
      * @param length double
-     * @param width double
+     * @param width  double
      * @param height double
      */
     public RectangularPrism(double length, double width, double height) {
@@ -19,6 +19,7 @@ public class RectangularPrism extends Shape {
 
     /**
      * Get the length.
+     *
      * @return double
      */
     public double getLength() {
@@ -27,6 +28,7 @@ public class RectangularPrism extends Shape {
 
     /**
      * Set the length.
+     *
      * @param length double
      */
     public void setLength(double length) {
@@ -35,6 +37,7 @@ public class RectangularPrism extends Shape {
 
     /**
      * Get the width.
+     *
      * @return double
      */
     public double getWidth() {
@@ -43,6 +46,7 @@ public class RectangularPrism extends Shape {
 
     /**
      * Set the width.
+     *
      * @param width double
      */
     public void setWidth(double width) {
@@ -51,6 +55,7 @@ public class RectangularPrism extends Shape {
 
     /**
      * Get the height.
+     *
      * @return double
      */
     public double getHeight() {
@@ -59,6 +64,7 @@ public class RectangularPrism extends Shape {
 
     /**
      * Set the height.
+     *
      * @param height double
      */
     public void setHeight(double height) {

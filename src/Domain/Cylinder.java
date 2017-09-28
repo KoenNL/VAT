@@ -2,7 +2,6 @@ package Domain;
 
 public class Cylinder extends Shape {
 
-    private final String type = "cylinder";
     private double radius;
     private double height;
 

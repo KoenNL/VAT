@@ -2,7 +2,6 @@ package Domain;
 
 public class Cone extends Shape {
 
-    private final String type = "cone";
     private double radius;
     private double height;
 

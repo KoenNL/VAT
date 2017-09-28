@@ -2,8 +2,6 @@ package Domain;
 
 public class SquarePyramid extends Pyramid {
 
-    private final String type = "squarePyramid";
-
     /**
      * @param length double
      * @param width double

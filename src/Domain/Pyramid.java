@@ -1,7 +1,6 @@
 package Domain;
 
 abstract public class Pyramid extends Shape {
-    private final String type = "pyramid";
     protected double length;
     protected double width;
     protected double height;

@@ -2,7 +2,6 @@ package Domain;
 
 public class Sphere extends Shape {
 
-    private final String type = "sphere";
     private double radius;
 
     /**
