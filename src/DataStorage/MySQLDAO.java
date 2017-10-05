@@ -1,25 +1,23 @@
 package DataStorage;
 
 import BusinessLogic.ExceptionHandler;
+import BusinessLogic.ShapeFactory;
 import Domain.*;
 import Main.Config;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class MySQLDAO extends ShapeDAO {
 
     private Connection connection;
 
-    public MySQLDAO(Config config, ArrayList<Shape> shapes) {
+    public MySQLDAO(Config config, ArrayList<Shape> shapes) throws DAOException {
         super(config, shapes);
         try {
             this.connection = DriverManager.getConnection("jdbc:mysql://localhost/library", "root", "root");
         } catch (SQLException exception) {
-            ExceptionHandler.handleException(exception, "Could not make a connection with the database");
+            throw new DAOException("Could not make a connection with the database", exception);
         }
 
     }
@@ -36,79 +34,161 @@ public class MySQLDAO extends ShapeDAO {
                 statement.execute();
             }
         } catch (SQLException exception) {
-            ExceptionHandler.handleException(exception, "Could not save shapes to database");
+            throw new DAOException("Could not save shapes to database", exception);
         }
 
         return true;
     }
 
+    /**
+     * Prepare the values for inserting or updating shapes.
+     *
+     * @param statement PreparedStatement
+     * @param shape     Shape
+     * @throws SQLException
+     * @throws DAOException
+     */
     private void prepareShapeValues(PreparedStatement statement, Shape shape) throws SQLException, DAOException {
         statement.setInt(1, shape.getId());
         statement.setString(2, shape.getClass().getSimpleName());
 
         switch (shape.getClass().getSimpleName()) {
             case "Sphere":
-                this.prepareSphereValues(statement, shape);
+                Sphere sphere = ShapeFactory.toSphere(shape);
+                statement.setDouble(3, 0);
+                statement.setDouble(4, 0);
+                statement.setDouble(5, 0);
+                statement.setDouble(6, sphere.getRadius());
                 break;
             case "Cylinder":
-                this.prepareCylinderValues(statement, shape);
+                Cylinder cylinder = ShapeFactory.toCylinder(shape);
+                statement.setDouble(3, 0);
+                statement.setDouble(4, 0);
+                statement.setDouble(5, cylinder.getHeight());
+                statement.setDouble(6, cylinder.getRadius());
                 break;
             case "Cone":
-                this.prepareConeValues(statement, shape);
+                Cone cone = ShapeFactory.toCone(shape);
+                statement.setDouble(3, 0);
+                statement.setDouble(4, 0);
+                statement.setDouble(5, cone.getHeight());
+                statement.setDouble(6, cone.getRadius());
                 break;
             case "RectangularPrism":
-                this.prepareRectangularPrismValues(statement, shape);
+                RectangularPrism rectangularPrism = ShapeFactory.toRectangularPrism(shape);
+                statement.setDouble(3, rectangularPrism.getLength());
+                statement.setDouble(4, rectangularPrism.getWidth());
+                statement.setDouble(5, rectangularPrism.getHeight());
+                statement.setDouble(6, 0);
                 break;
             case "SquarePyramid":
-                this.prepareSquarePyramidValues(statement, shape);
+                SquarePyramid squarePyramid = ShapeFactory.toSquarePyramid(shape);
+                statement.setDouble(3, squarePyramid.getLength());
+                statement.setDouble(4, squarePyramid.getWidth());
+                statement.setDouble(5, squarePyramid.getHeight());
+                statement.setDouble(6, 0);
                 break;
             default:
                 throw new DAOException("Invalid shape " + shape.getClass().getSimpleName());
         }
     }
 
-    private void prepareSphereValues(PreparedStatement statement, Sphere sphere) throws SQLException {
-        statement.setDouble(3, 0);
-        statement.setDouble(4, 0);
-        statement.setDouble(5, 0);
-        statement.setDouble(6, sphere.getRadius());
-    }
-
-    private void prepareCylinderValues(PreparedStatement statement, Cylinder cylinder) throws SQLException {
-        statement.setDouble(3, 0);
-        statement.setDouble(4, 0);
-        statement.setDouble(5, cylinder.getHeight());
-        statement.setDouble(6, cylinder.getRadius());
-    }
-
-    private void prepareConeValues(PreparedStatement statement, Cone cone) throws SQLException {
-        statement.setDouble(3, 0);
-        statement.setDouble(4, 0);
-        statement.setDouble(5, cone.getHeight());
-        statement.setDouble(6, cone.getRadius());
-    }
-
-    private void prepareRectangularPrismValues(PreparedStatement statement, RectangularPrism rectangularPrism) throws SQLException {
-        statement.setDouble(3, rectangularPrism.getLength());
-        statement.setDouble(4, rectangularPrism.getWidth());
-        statement.setDouble(5, rectangularPrism.getHeight());
-        statement.setDouble(6, 0);
-    }
-
-    private void prepareSquarePyramidValues(PreparedStatement statement, SquarePyramid squarePyramid) throws SQLException {
-        statement.setDouble(3, squarePyramid.getLength());
-        statement.setDouble(4, squarePyramid.getWidth());
-        statement.setDouble(5, squarePyramid.getHeight());
-        statement.setDouble(6, 0);
-    }
-
     @Override
     public boolean load() throws DAOException {
+        try {
+            String sql = "SELECT * FROM `Shape`";
+
+            PreparedStatement statement = this.connection.prepareStatement(sql);
+
+            statement.execute();
+
+            ResultSet resultSet = statement.getResultSet();
+
+            this.shapes = this.resultToShapes(resultSet);
+
+            if (this.shapes.size() > 0) {
+                return true;
+            }
+
+        } catch (SQLException exception) {
+            throw new DAOException("Could not load shapes to database", exception);
+        }
+
         return false;
+    }
+
+    /**
+     * Convert a result set to an array list of shape objects.
+     *
+     * @param resultSet ResultSet
+     * @return ArrayList<Shape>
+     * @throws SQLException
+     * @throws DAOException
+     */
+    private ArrayList<Shape> resultToShapes(ResultSet resultSet) throws SQLException, DAOException {
+        ArrayList<Shape> shapes = new ArrayList<Shape>();
+
+        while (resultSet.next()) {
+            switch (resultSet.getString("type")) {
+                case "Sphere":
+                    Sphere sphere = new Sphere(resultSet.getDouble("radius"));
+
+                    shapes.add(sphere);
+                    break;
+                case "Cylinder":
+                    Cylinder cylinder = new Cylinder(
+                            resultSet.getDouble("raduis"),
+                            resultSet.getDouble("height")
+                    );
+
+                    shapes.add(cylinder);
+                    break;
+                case "Cone":
+                    Cone cone = new Cone(
+                            resultSet.getDouble("raduis"),
+                            resultSet.getDouble("height")
+                    );
+
+                    shapes.add(cone);
+                    break;
+                case "RectangularPrism":
+                    RectangularPrism rectangularPrism = new RectangularPrism(
+                            resultSet.getDouble("length"),
+                            resultSet.getDouble("width"),
+                            resultSet.getDouble("height")
+                    );
+
+                    shapes.add(rectangularPrism);
+                    break;
+                case "SquarePyramid":
+                    SquarePyramid squarePyramid = new SquarePyramid(
+                            resultSet.getDouble("length"),
+                            resultSet.getDouble("width"),
+                            resultSet.getDouble("height")
+                    );
+
+                    shapes.add(squarePyramid);
+                    break;
+                default:
+                    throw new DAOException(
+                            "Invalid type '" + resultSet.getString("type") + "' for fetching shape from database."
+                    );
+            }
+        }
+
+        return shapes;
     }
 
     @Override
     public boolean delete() throws DAOException {
-        return false;
+        try {
+            String sql = "DELETE FROM `Shape`";
+
+            PreparedStatement statement = this.connection.prepareStatement(sql);
+
+            return statement.execute();
+        } catch (SQLException exception) {
+            throw new DAOException("Unable to delete shapes from database.", exception);
+        }
     }
 }

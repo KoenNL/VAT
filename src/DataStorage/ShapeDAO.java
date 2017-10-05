@@ -16,6 +16,22 @@ abstract public class ShapeDAO {
     }
 
     /**
+     * Get all shapes.
+     * @return ArrayList<Shape>
+     */
+    public ArrayList<Shape> getShapes() {
+        return shapes;
+    }
+
+    /**
+     * Set the shapes.
+     * @param shapes ArrayList<Shape>
+     */
+    public void setShapes(ArrayList<Shape> shapes) {
+        this.shapes = shapes;
+    }
+
+    /**
      * Save the shapes.
      * @return boolean
      */
