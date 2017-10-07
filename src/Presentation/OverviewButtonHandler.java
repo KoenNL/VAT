@@ -32,7 +32,7 @@ public class OverviewButtonHandler implements ActionListener {
                 this.newShape();
                 break;
             case "editShape":
-
+                this.editShape();
                 break;
             case "deleteShape":
                 this.deleteShape();
@@ -43,15 +43,18 @@ public class OverviewButtonHandler implements ActionListener {
         }
     }
 
+    /**
+     * Save all currently loaded shapes.
+     */
     private void saveShapes() {
         try {
             if (this.overviewPanel.getShapeManager().getDAOType() == null) {
                 this.overviewPanel.getShapeManager().setDAO(new MySQLDAO(new Config()));
-                if (this.overviewPanel.getShapeManager().save()) {
-                    this.overviewPanel.setInfo("Shapes saved", OverviewPanel.INFO_SUCCESS);
-                } else {
-                    this.overviewPanel.setInfo("Shapes not saved", OverviewPanel.INFO_WARNING);
-                }
+            }
+            if (this.overviewPanel.getShapeManager().save()) {
+                this.overviewPanel.setInfo("Shapes saved", OverviewPanel.INFO_SUCCESS);
+            } else {
+                this.overviewPanel.setInfo("Shapes not saved", OverviewPanel.INFO_WARNING);
             }
         } catch (DAOException exception) {
             ExceptionHandler.handleException(exception.getException(), exception.getFriendlyMessage());
@@ -60,6 +63,9 @@ public class OverviewButtonHandler implements ActionListener {
         }
     }
 
+    /**
+     * Load a list of shapes.
+     */
     private void loadShapes() {
         try {
             if (this.overviewPanel.getShapeManager().getDAOType() == null) {
@@ -78,6 +84,9 @@ public class OverviewButtonHandler implements ActionListener {
         }
     }
 
+    /**
+     * Create a new shape.
+     */
     private void newShape() {
         if (this.overviewPanel.getNewShapeSelectorValue() == null) {
             this.overviewPanel.setInfo("No shape type selected", OverviewPanel.INFO_INFO);
@@ -92,8 +101,20 @@ public class OverviewButtonHandler implements ActionListener {
         }
     }
 
+    /**
+     * Edit an existing shape.
+     */
     private void editShape() {
+        if (this.overviewPanel.getSelectedShape() == null) {
+            this.overviewPanel.setInfo("No shape selected", OverviewPanel.INFO_INFO);
+            return;
+        }
 
+        try {
+            ShapeFrameFactory.createShapeFrame(this.overviewPanel.getSelectedShape(), this.overviewPanel);
+        } catch (BusinessLogicException exception) {
+            this.overviewPanel.setInfo(exception.getFriendlyMessage(), OverviewPanel.INFO_WARNING);
+        }
     }
 
     /**

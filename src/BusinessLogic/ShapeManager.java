@@ -29,13 +29,6 @@ public class ShapeManager {
      * @param shape Shape
      */
     public void addShape(Shape shape) {
-        // Set the id of the shape.
-        if (this.shapes.size() > 0 && shape.getId() == 0) {
-            shape.setId(this.shapes.size() + 1);
-        } else {
-            shape.setId(1);
-        }
-
         this.shapes.add(shape);
     }
 
@@ -141,7 +134,7 @@ public class ShapeManager {
      * @return boolean
      */
     public boolean deleteShape(Shape shape) {
-        if (this.shapes.size() == 0 || this.shapes.get(shape.getId()) == null) {
+        if (this.shapes.size() == 0 || this.shapes.indexOf(shape) == -1) {
             return false;
         }
         this.shapes.remove(shape);

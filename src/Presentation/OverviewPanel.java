@@ -115,6 +115,8 @@ public class OverviewPanel extends Panel {
         this.add(this.loadButton, gridBagConstraints);
 
         this.editButton = new JButton("Edit");
+        this.editButton.setActionCommand("editShape");
+        this.editButton.addActionListener(this.overviewButtonHandler);
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 3;
@@ -164,19 +166,19 @@ public class OverviewPanel extends Panel {
      */
     public void setInfo(String info, String type) {
         switch (type) {
-            case "warning":
+            case OverviewPanel.INFO_WARNING:
                 this.infoBox.setBackground(Color.YELLOW);
                 this.infoBox.setForeground(Color.BLACK);
                 break;
-            case "danger":
+            case OverviewPanel.INFO_DANGER:
                 this.infoBox.setBackground(Color.RED);
                 this.infoBox.setForeground(Color.WHITE);
                 break;
-            case "info":
+            case OverviewPanel.INFO_INFO:
                 this.infoBox.setBackground(Color.BLUE);
                 this.infoBox.setForeground(Color.WHITE);
                 break;
-            case "success":
+            case OverviewPanel.INFO_SUCCESS:
                 this.infoBox.setBackground(Color.GREEN);
                 this.infoBox.setForeground(Color.WHITE);
                 break;

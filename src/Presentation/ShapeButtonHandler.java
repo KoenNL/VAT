@@ -19,7 +19,10 @@ public class ShapeButtonHandler implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "addShape":
-                this.addShape();
+                this.addShape(true);
+                break;
+            case "editShape":
+                this.addShape(false);
                 break;
             case "cancel":
                 this.cancel();
@@ -30,12 +33,16 @@ public class ShapeButtonHandler implements ActionListener {
     /**
      * Save the shape to the shape manager, update the list in the overview panel and close the shape frame.
      */
-    private void addShape() {
+    private void addShape(boolean addNew) {
         if (this.shapePanel.validateForm()) {
             Shape shape = this.shapePanel.toShape();
-            this.overviewPanel.getShapeManager().addShape(shape);
+            if (addNew) {
+                this.overviewPanel.getShapeManager().addShape(shape);
+                this.overviewPanel.setInfo("Shape " + shape + " has been added", OverviewPanel.INFO_SUCCESS);
+            } else {
+                this.overviewPanel.setInfo("Shape " + shape + " has been updated", OverviewPanel.INFO_SUCCESS);
+            }
             this.overviewPanel.refreshShapeList();
-            this.overviewPanel.setInfo("Shape " + shape + " has been added", OverviewPanel.INFO_SUCCESS);
             this.shapePanel.close();
         }
     }

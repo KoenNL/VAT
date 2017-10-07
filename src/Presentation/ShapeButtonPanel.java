@@ -8,9 +8,9 @@ public class ShapeButtonPanel extends Panel {
     private ShapeButtonHandler shapeButtonHandler;
     private ShapePanel shapePanel;
     private OverviewPanel overviewPanel;
-    private JButton addButton, cancelButton;
+    private JButton saveButton, cancelButton;
 
-    public ShapeButtonPanel(ShapePanel shapePanel, OverviewPanel overviewPanel) {
+    public ShapeButtonPanel(ShapePanel shapePanel, OverviewPanel overviewPanel, String type) throws PresentationException {
         super();
 
         this.shapePanel = shapePanel;
@@ -33,15 +33,26 @@ public class ShapeButtonPanel extends Panel {
         this.add(this.cancelButton);
 
         // Create save button
-        this.addButton = new JButton("Add");
-        this.addButton.setActionCommand("addShape");
-        this.addButton.addActionListener(this.shapeButtonHandler);
+        switch (type) {
+            case "add":
+                this.saveButton = new JButton("Add");
+                this.saveButton.setActionCommand("addShape");
+                break;
+            case "edit":
+                this.saveButton = new JButton("Edit");
+                this.saveButton.setActionCommand("editShape");
+                break;
+            default:
+                throw new PresentationException("Invalid shape button type '" + type + "' provided.");
+        }
+
+        this.saveButton.addActionListener(this.shapeButtonHandler);
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = insets;
         gridBagConstraints.weightx = 1;
-        this.add(this.addButton);
+        this.add(this.saveButton);
     }
 }

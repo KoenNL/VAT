@@ -35,7 +35,11 @@ public class ShapeFrameFactory {
         }
 
         shapeFrame.setShapePanel(shapePanel);
-        shapeFrame.setShapeButtonPanel(new ShapeButtonPanel(shapePanel, overviewPanel));
+        try {
+            shapeFrame.setShapeButtonPanel(new ShapeButtonPanel(shapePanel, overviewPanel, "add"));
+        } catch(PresentationException exception) {
+            ExceptionHandler.handleException(exception.getException(), exception.getFriendlyMessage());
+        }
     }
 
     /**
@@ -68,7 +72,11 @@ public class ShapeFrameFactory {
         }
 
         shapeFrame.setShapePanel(shapePanel);
-        shapeFrame.setShapeButtonPanel(new ShapeButtonPanel(shapePanel, overviewPanel));
+        try {
+            shapeFrame.setShapeButtonPanel(new ShapeButtonPanel(shapePanel, overviewPanel, "edit"));
+        } catch(PresentationException exception) {
+            ExceptionHandler.handleException(exception.getException(), exception.getFriendlyMessage());
+        }
     }
 
 }

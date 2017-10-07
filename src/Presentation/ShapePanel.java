@@ -12,6 +12,7 @@ abstract public class ShapePanel extends Panel {
     public ShapePanel(Shape shape) {
         super();
 
+        this.shape = shape;
         this.setLayout(new GridBagLayout());
     }
 

@@ -105,7 +105,7 @@ public class MySQLDAO extends ShapeDAO {
                     break;
                 case "Cylinder":
                     Cylinder cylinder = new Cylinder(
-                            resultSet.getDouble("raduis"),
+                            resultSet.getDouble("radius"),
                             resultSet.getDouble("height")
                     );
                     cylinder.setId(resultSet.getInt("id"));
@@ -114,7 +114,7 @@ public class MySQLDAO extends ShapeDAO {
                     break;
                 case "Cone":
                     Cone cone = new Cone(
-                            resultSet.getDouble("raduis"),
+                            resultSet.getDouble("radius"),
                             resultSet.getDouble("height")
                     );
                     cone.setId(resultSet.getInt("id"));
