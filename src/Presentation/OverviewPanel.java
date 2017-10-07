@@ -64,6 +64,8 @@ public class OverviewPanel extends Panel {
         this.add(this.newShapeSelectorField, gridBagConstraints);
 
         this.newShapeButton = new JButton("Add");
+        this.newShapeButton.setActionCommand("newShape");
+        this.newShapeButton.addActionListener(this.overviewButtonHandler);
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 2;
@@ -207,5 +209,13 @@ public class OverviewPanel extends Panel {
      */
     public void refreshShapeList() {
         this.shapeList.setListData(new Vector(this.shapeManager.getShapes()));
+    }
+
+    /**
+     * Get the value of the new shape selector.
+     * @return String
+     */
+    public String getNewShapeSelectorValue() {
+        return this.newShapeSelectorField.getSelectedItem().toString();
     }
 }

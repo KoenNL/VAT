@@ -1,7 +1,8 @@
 package Presentation;
 
 import BusinessLogic.ExceptionHandler;
-import BusinessLogic.ManagerException;
+import BusinessLogic.BusinessLogicException;
+import BusinessLogic.ShapeFrameFactory;
 import DataStorage.DAOException;
 import DataStorage.MySQLDAO;
 import Domain.Shape;
@@ -28,7 +29,7 @@ public class OverviewButtonHandler implements ActionListener {
                 this.loadShapes();
                 break;
             case "newShape":
-
+                this.newShape();
                 break;
             case "editShape":
 
@@ -57,13 +58,23 @@ public class OverviewButtonHandler implements ActionListener {
             }
         } catch (DAOException exception) {
             ExceptionHandler.handleException(exception.getException(), exception.getFriendlyMessage());
-        } catch (ManagerException exception) {
+        } catch (BusinessLogicException exception) {
             this.overviewPanel.setInfo(exception.getFriendlyMessage(), OverviewPanel.INFO_DANGER);
         }
     }
 
-    private void newShape(String type) {
+    private void newShape() {
+        if (this.overviewPanel.getNewShapeSelectorValue() == null) {
+            this.overviewPanel.setInfo("No shape type selected", OverviewPanel.INFO_INFO);
+            return;
+        }
 
+        String shapeType = this.overviewPanel.getNewShapeSelectorValue();
+        try {
+            ShapeFrameFactory.createShapeFrame(shapeType);
+        } catch (BusinessLogicException exception) {
+            this.overviewPanel.setInfo(exception.getFriendlyMessage(), OverviewPanel.INFO_WARNING);
+        }
     }
 
     private void editShape() {

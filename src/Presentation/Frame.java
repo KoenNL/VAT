@@ -11,7 +11,7 @@ abstract public class Frame extends JFrame {
     }
 
     public void addPanel(Panel panel) {
-        this.setContentPane(panel);
+        this.add(panel);
         this.pack();
         this.setVisible(true);
     }

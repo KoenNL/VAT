@@ -3,14 +3,16 @@ package Presentation;
 import Domain.Shape;
 
 import javax.swing.*;
+import java.awt.*;
 
 abstract public class ShapePanel extends Panel {
 
     protected Shape shape;
-    protected JButton saveButton, cancelButton;
 
-    public ShapePanel(Shape shape, OverviewPanel overviewPanel) {
+    public ShapePanel(Shape shape) {
         super();
+
+        this.setLayout(new GridBagLayout());
     }
 
     abstract public Shape toShape();

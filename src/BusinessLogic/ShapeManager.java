@@ -77,11 +77,11 @@ public class ShapeManager {
     /**
      * Save the current list of shapes with the set DAO.
      * @return boolean
-     * @throws ManagerException
+     * @throws BusinessLogicException
      */
-    public boolean save() throws ManagerException {
+    public boolean save() throws BusinessLogicException {
         if (this.DAO == null) {
-            throw new ManagerException("No DAO set for saving data.");
+            throw new BusinessLogicException("No DAO set for saving data.");
         }
 
         try {
@@ -89,18 +89,18 @@ public class ShapeManager {
 
             return this.DAO.save();
         } catch (DAOException exception) {
-            throw new ManagerException("Unable to save shapes.", exception);
+            throw new BusinessLogicException("Unable to save shapes.", exception);
         }
     }
 
     /**
      * Load a list of shapes with the set DAO.
      * @return boolean
-     * @throws ManagerException
+     * @throws BusinessLogicException
      */
-    public boolean load() throws ManagerException  {
+    public boolean load() throws BusinessLogicException {
         if (this.DAO == null) {
-            throw new ManagerException("No DAO set for loading data.");
+            throw new BusinessLogicException("No DAO set for loading data.");
         }
 
         try {
@@ -109,7 +109,7 @@ public class ShapeManager {
 
             return true;
         } catch (DAOException exception) {
-            throw new ManagerException("Unable to load shapes.", exception);
+            throw new BusinessLogicException("Unable to load shapes.", exception);
         }
     }
 
