@@ -9,8 +9,8 @@ public class FileDAO extends ShapeDAO {
 
     private final ShapeFileParser fileParser;
 
-    public FileDAO(Config config, ArrayList<Shape> shapes, String fileType) throws DAOException {
-        super(config, shapes);
+    public FileDAO(Config config, String fileType) throws DAOException {
+        super(config);
 
         switch (fileType) {
             case "CSV":

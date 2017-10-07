@@ -10,9 +10,8 @@ abstract public class ShapeDAO {
     protected ArrayList<Shape> shapes;
     protected Config config;
 
-    public ShapeDAO(Config config, ArrayList<Shape> shapes) {
+    public ShapeDAO(Config config) {
         this.config = config;
-        this.shapes = shapes;
     }
 
     /**

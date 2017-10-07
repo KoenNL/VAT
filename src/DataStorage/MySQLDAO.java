@@ -10,11 +10,15 @@ public class MySQLDAO extends ShapeDAO {
 
     private Connection connection;
 
-    public MySQLDAO(Config config, ArrayList<Shape> shapes) throws DAOException {
-        super(config, shapes);
+    public MySQLDAO(Config config) throws DAOException {
+        super(config);
+
         try {
-            this.connection = DriverManager.getConnection("jdbc:mysql://localhost/library", "root", "root");
-        } catch (SQLException exception) {
+            this.connection = DriverManager.getConnection(
+                    "jdbc:mysql://" + config.getDatabaseHost() + ":3306/" + config.getDatabaseName(),
+                    config.getDatabaseUser(),
+                    config.getDatabasePassword());
+        } catch (Exception exception) {
             throw new DAOException("Could not make a connection with the database", exception);
         }
 
@@ -23,7 +27,7 @@ public class MySQLDAO extends ShapeDAO {
     @Override
     public boolean save() throws DAOException {
         try {
-            String sql = "INSERT INTO `Shape` VALUES(?, ?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO `Shape` (`id`, `type`, `radius`, `length`, `width`, `height`) VALUES(?, ?, ?, ?, ?, ?);";
 
             PreparedStatement statement = this.connection.prepareStatement(sql);
 
@@ -49,11 +53,10 @@ public class MySQLDAO extends ShapeDAO {
     private void prepareShapeValues(PreparedStatement statement, Shape shape) throws SQLException {
         statement.setInt(1, shape.getId());
         statement.setString(2, shape.getType());
-
-        statement.setDouble(3, shape.getLength());
-        statement.setDouble(4, shape.getWidth());
-        statement.setDouble(5, shape.getHeight());
-        statement.setDouble(6, shape.getRadius());
+        statement.setDouble(3, shape.getRadius());
+        statement.setDouble(4, shape.getLength());
+        statement.setDouble(5, shape.getWidth());
+        statement.setDouble(6, shape.getHeight());
     }
 
     @Override

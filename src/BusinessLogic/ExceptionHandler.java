@@ -13,9 +13,10 @@ public class ExceptionHandler {
     public static void handleException(Exception exception, String friendlyMessage) {
         if (ExceptionHandler.debug) {
             System.out.println(exception.getMessage());
-        } else {
-            JOptionPane.showMessageDialog(null, friendlyMessage);
         }
+
+        JOptionPane.showMessageDialog(null, friendlyMessage);
+
         System.exit(1);
     }
 

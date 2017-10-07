@@ -3,10 +3,10 @@ package Main;
 public class Config {
 
     private String filePath,
-            databaseHost,
-            databaseName,
-            databaseUser,
-            databasePassword;
+            databaseHost = "localhost",
+            databaseName = "vat",
+            databaseUser = "root",
+            databasePassword = "root";
 
     /**
      * Get the file path.

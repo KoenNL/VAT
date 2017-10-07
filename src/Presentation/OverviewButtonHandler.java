@@ -1,6 +1,11 @@
 package Presentation;
 
+import BusinessLogic.ExceptionHandler;
+import BusinessLogic.ManagerException;
+import DataStorage.DAOException;
+import DataStorage.MySQLDAO;
 import Domain.Shape;
+import Main.Config;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,8 +24,8 @@ public class OverviewButtonHandler implements ActionListener {
             case "save":
 
                 break;
-            case "load":
-
+            case "loadShapes":
+                this.loadShapes();
                 break;
             case "newShape":
 
@@ -41,8 +46,20 @@ public class OverviewButtonHandler implements ActionListener {
 
     }
 
-    private void load() {
-
+    private void loadShapes() {
+        try {
+            this.overviewPanel.getShapeManager().setDAO(new MySQLDAO(new Config()));
+            if (this.overviewPanel.getShapeManager().load()) {
+                this.overviewPanel.setInfo("Shapes loaded", OverviewPanel.INFO_SUCCESS);
+                this.overviewPanel.refreshShapeList();
+            } else {
+                this.overviewPanel.setInfo("No shapes loaded", OverviewPanel.INFO_INFO);
+            }
+        } catch (DAOException exception) {
+            ExceptionHandler.handleException(exception.getException(), exception.getFriendlyMessage());
+        } catch (ManagerException exception) {
+            this.overviewPanel.setInfo(exception.getFriendlyMessage(), OverviewPanel.INFO_DANGER);
+        }
     }
 
     private void newShape(String type) {

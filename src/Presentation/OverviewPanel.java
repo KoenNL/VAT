@@ -72,10 +72,6 @@ public class OverviewPanel extends Panel {
         gridBagConstraints.weightx = 1;
         this.add(this.newShapeButton, gridBagConstraints);
 
-        // TODO remove this dummy code :)
-        Sphere sphere = new Sphere(10);
-        this.shapeManager.addShape(sphere);
-
         this.shapeList = new JList(this.shapeManager.getShapes().toArray());
         this.shapeList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         this.shapeList.setLayoutOrientation(JList.VERTICAL);
@@ -104,6 +100,8 @@ public class OverviewPanel extends Panel {
         this.add(this.saveButton, gridBagConstraints);
 
         this.loadButton = new JButton("Load");
+        this.loadButton.setActionCommand("loadShapes");
+        this.loadButton.addActionListener(this.overviewButtonHandler);
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
