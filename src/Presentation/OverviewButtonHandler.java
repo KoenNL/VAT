@@ -71,7 +71,7 @@ public class OverviewButtonHandler implements ActionListener {
 
         String shapeType = this.overviewPanel.getNewShapeSelectorValue();
         try {
-            ShapeFrameFactory.createShapeFrame(shapeType);
+            ShapeFrameFactory.createShapeFrame(shapeType, this.overviewPanel);
         } catch (BusinessLogicException exception) {
             this.overviewPanel.setInfo(exception.getFriendlyMessage(), OverviewPanel.INFO_WARNING);
         }

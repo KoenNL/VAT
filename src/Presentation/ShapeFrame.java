@@ -1,15 +1,15 @@
 package Presentation;
 
-import oracle.jvm.hotspot.jfr.JFR;
-
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class ShapeFrame extends Frame {
 
     private JPanel layoutPanel;
 
+    /**
+     * @param title String
+     */
     public ShapeFrame(String title) {
         super(title);
 
@@ -21,17 +21,33 @@ public class ShapeFrame extends Frame {
         this.add(layoutPanel);
     }
 
+    /**
+     * Set the shape panel.
+     *
+     * @param shapePanel ShapePanel
+     */
     public void setShapePanel(ShapePanel shapePanel) {
-        this.layoutPanel.add(shapePanel, this.getGridbagConstraints(0));
+        this.layoutPanel.add(shapePanel, this.getGridBagConstraints(0));
     }
 
+    /**
+     * Set the shape button panel and make the frame visible.
+     *
+     * @param shapeButtonPanel ShapeButtonPanel
+     */
     public void setShapeButtonPanel(ShapeButtonPanel shapeButtonPanel) {
-        this.layoutPanel.add(shapeButtonPanel, this.getGridbagConstraints(1));
+        this.layoutPanel.add(shapeButtonPanel, this.getGridBagConstraints(1));
         this.pack();
         this.setVisible(true);
     }
 
-    private GridBagConstraints getGridbagConstraints(int position) {
+    /**
+     * Get general gridBag constraints.
+     *
+     * @param position int
+     * @return GridBagConstraints
+     */
+    private GridBagConstraints getGridBagConstraints(int position) {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;

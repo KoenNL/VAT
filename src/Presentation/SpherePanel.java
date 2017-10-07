@@ -42,9 +42,25 @@ public class SpherePanel extends ShapePanel {
     @Override
     public Shape toShape() {
         if (this.shape == null) {
-            this.shape = new Sphere(Double.parseDouble(this.radiusField.getText()));
+            this.shape = new Sphere(Double.parseDouble(this.radiusField.getText().replace(',', '.')));
+        } else {
+            this.shape.setRadius(Double.parseDouble(this.radiusField.getText().replace(',', '.')));
         }
 
         return this.shape;
+    }
+
+    public boolean validateForm() {
+        this.shape = this.toShape();
+
+        boolean valid = true;
+        if (this.shape.getRadius() == 0.00) {
+            this.radiusLabel.setForeground(Color.RED);
+            valid = false;
+        } else {
+            this.radiusLabel.setForeground(Color.BLACK);
+        }
+
+        return valid;
     }
 }

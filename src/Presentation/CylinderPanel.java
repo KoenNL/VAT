@@ -65,14 +65,35 @@ public class CylinderPanel extends ShapePanel {
     public Shape toShape() {
         if (this.shape == null) {
             this.shape = new Cylinder(
-                    Double.parseDouble(this.radiusField.getText()),
-                    Double.parseDouble(this.heightField.getText())
+                    Double.parseDouble(this.radiusField.getText().replace(',', '.')),
+                    Double.parseDouble(this.heightField.getText().replace(',', '.'))
             );
         } else {
-            this.shape.setRadius(Double.parseDouble(this.radiusField.getText()));
-            this.shape.setHeight(Double.parseDouble(this.heightField.getText()));
+            this.shape.setRadius(Double.parseDouble(this.radiusField.getText().replace(',', '.')));
+            this.shape.setHeight(Double.parseDouble(this.heightField.getText().replace(',', '.')));
         }
 
         return this.shape;
+    }
+
+    public boolean validateForm() {
+        this.shape = this.toShape();
+
+        boolean valid = true;
+        if (this.shape.getRadius() == 0.00) {
+            this.radiusLabel.setForeground(Color.RED);
+            valid = false;
+        } else {
+            this.radiusLabel.setForeground(Color.BLACK);
+        }
+
+        if (this.shape.getHeight() == 0.00) {
+            this.heightLabel.setForeground(Color.RED);
+            valid = false;
+        } else {
+            this.heightLabel.setForeground(Color.BLACK);
+        }
+
+        return valid;
     }
 }

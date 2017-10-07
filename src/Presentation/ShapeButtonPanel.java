@@ -7,16 +7,16 @@ public class ShapeButtonPanel extends Panel {
 
     private ShapeButtonHandler shapeButtonHandler;
     private ShapePanel shapePanel;
-    private JButton saveButton, cancelButton;
+    private OverviewPanel overviewPanel;
+    private JButton addButton, cancelButton;
 
-    public ShapeButtonPanel(ShapePanel shapePanel) {
+    public ShapeButtonPanel(ShapePanel shapePanel, OverviewPanel overviewPanel) {
         super();
 
-        this.setBackground(Color.BLUE);
-
         this.shapePanel = shapePanel;
+        this.overviewPanel = overviewPanel;
 
-        this.shapeButtonHandler = new ShapeButtonHandler(this.shapePanel);
+        this.shapeButtonHandler = new ShapeButtonHandler(this.shapePanel, this.overviewPanel);
 
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         Insets insets = new Insets(0, 10, 0, 0);
@@ -33,15 +33,15 @@ public class ShapeButtonPanel extends Panel {
         this.add(this.cancelButton);
 
         // Create save button
-        this.saveButton = new JButton("Save");
-        this.saveButton.setActionCommand("saveShape");
-        this.saveButton.addActionListener(this.shapeButtonHandler);
+        this.addButton = new JButton("Add");
+        this.addButton.setActionCommand("addShape");
+        this.addButton.addActionListener(this.shapeButtonHandler);
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = insets;
         gridBagConstraints.weightx = 1;
-        this.add(this.saveButton);
+        this.add(this.addButton);
     }
 }

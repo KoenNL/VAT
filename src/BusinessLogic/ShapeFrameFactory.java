@@ -9,9 +9,9 @@ public class ShapeFrameFactory {
      * Create a new frame with a new empty shape.
      *
      * @param type String
-     * @throws BusinessLogicException
+     * @throws BusinessLogicException on error
      */
-    public static void createShapeFrame(String type) throws BusinessLogicException {
+    public static void createShapeFrame(String type, OverviewPanel overviewPanel) throws BusinessLogicException {
         ShapeFrame shapeFrame = new ShapeFrame(type);
         ShapePanel shapePanel;
         switch (type) {
@@ -35,16 +35,16 @@ public class ShapeFrameFactory {
         }
 
         shapeFrame.setShapePanel(shapePanel);
-        shapeFrame.setShapeButtonPanel(new ShapeButtonPanel(shapePanel));
+        shapeFrame.setShapeButtonPanel(new ShapeButtonPanel(shapePanel, overviewPanel));
     }
 
     /**
      * Create a new frame with an existing shape.
      *
      * @param shape Shape
-     * @throws BusinessLogicException
+     * @throws BusinessLogicException on error
      */
-    public static void createShapeFrame(Shape shape) throws BusinessLogicException {
+    public static void createShapeFrame(Shape shape, OverviewPanel overviewPanel) throws BusinessLogicException {
         ShapeFrame shapeFrame = new ShapeFrame(shape.getType());
         ShapePanel shapePanel;
         switch (shape.getType()) {
@@ -68,7 +68,7 @@ public class ShapeFrameFactory {
         }
 
         shapeFrame.setShapePanel(shapePanel);
-        shapeFrame.setShapeButtonPanel(new ShapeButtonPanel(shapePanel));
+        shapeFrame.setShapeButtonPanel(new ShapeButtonPanel(shapePanel, overviewPanel));
     }
 
 }

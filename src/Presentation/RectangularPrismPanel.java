@@ -86,16 +86,44 @@ public class RectangularPrismPanel extends ShapePanel {
     public Shape toShape() {
         if (this.shape == null) {
             this.shape = new RectangularPrism(
-                    Double.parseDouble(this.lengthField.getText()),
-                    Double.parseDouble(this.widthField.getText()),
-                    Double.parseDouble(this.heightField.getText())
+                    Double.parseDouble(this.lengthField.getText().replace(',', '.')),
+                    Double.parseDouble(this.widthField.getText().replace(',', '.')),
+                    Double.parseDouble(this.heightField.getText().replace(',', '.'))
             );
         } else {
-            this.shape.setLength(Double.parseDouble(this.lengthField.getText()));
-            this.shape.setWidth(Double.parseDouble(this.widthField.getText()));
-            this.shape.setHeight(Double.parseDouble(this.heightField.getText()));
+            this.shape.setLength(Double.parseDouble(this.lengthField.getText().replace(',', '.')));
+            this.shape.setWidth(Double.parseDouble(this.widthField.getText().replace(',', '.')));
+            this.shape.setHeight(Double.parseDouble(this.heightField.getText().replace(',', '.')));
         }
 
         return this.shape;
+    }
+
+    public boolean validateForm() {
+        this.shape = this.toShape();
+
+        boolean valid = true;
+        if (this.shape.getLength() == 0.00) {
+            this.lengthLabel.setForeground(Color.RED);
+            valid = false;
+        } else {
+            this.lengthLabel.setForeground(Color.BLACK);
+        }
+
+        if (this.shape.getHeight() == 0.00) {
+            this.heightLabel.setForeground(Color.RED);
+            valid = false;
+        } else {
+            this.heightLabel.setForeground(Color.BLACK);
+        }
+
+        if (this.shape.getHeight() == 0.00) {
+            this.heightLabel.setForeground(Color.RED);
+            valid = false;
+        } else {
+            this.heightLabel.setForeground(Color.BLACK);
+        }
+
+        return valid;
     }
 }
