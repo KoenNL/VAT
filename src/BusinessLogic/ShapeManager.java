@@ -8,38 +8,46 @@ import java.util.ArrayList;
 
 public class ShapeManager {
 
-    private ArrayList<Shape> shapes;
-    private ShapeDAO DAO;
+    private static ArrayList<Shape> shapes = new ArrayList<Shape>();
+    private static ShapeDAO DAO;
 
     /**
      * Add a shape to the manager.
      * @param shape Shape
      */
-    public void addShape(Shape shape) {
+    public static void addShape(Shape shape) {
         // Set the id of the shape.
-        if (this.shapes.get(shape.getId()) == null) {
-            shape.setId(this.shapes.size());
+        if (ShapeManager.shapes.get(shape.getId()) == null) {
+            shape.setId(ShapeManager.shapes.size());
         }
 
-        this.shapes.add(shape);
+        ShapeManager.shapes.add(shape);
+    }
+
+    /**
+     * Get all shapes.
+     * @return ArrayList<Shape>
+     */
+    public static ArrayList<Shape> getShapes() {
+        return ShapeManager.shapes;
     }
 
     /**
      * Set the data access object.
      * @param DAO ShapeDAO
      */
-    public void setDAO(ShapeDAO DAO) {
-        this.DAO = DAO;
+    public static void setDAO(ShapeDAO DAO) {
+        ShapeManager.DAO = DAO;
     }
 
     /**
      * Calculate the total volume of all set shapes.
      * @return double
      */
-    public double calculateTotalVolume() {
+    public static double calculateTotalVolume() {
         double totalVolume = 0.0;
 
-        for (Shape shape : this.shapes) {
+        for (Shape shape : ShapeManager.shapes) {
             totalVolume += shape.calculateVolume();
         }
 
@@ -51,15 +59,15 @@ public class ShapeManager {
      * @return boolean
      * @throws ManagerException
      */
-    public boolean save() throws ManagerException {
-        if (this.DAO == null) {
+    public static boolean save() throws ManagerException {
+        if (ShapeManager.DAO == null) {
             throw new ManagerException("No DAO set for saving data.");
         }
 
         try {
-            this.DAO.setShapes(this.shapes);
+            ShapeManager.DAO.setShapes(ShapeManager.shapes);
 
-            return this.DAO.save();
+            return ShapeManager.DAO.save();
         } catch (DAOException exception) {
             throw new ManagerException("Unable to save shapes.", exception);
         }
@@ -70,14 +78,14 @@ public class ShapeManager {
      * @return boolean
      * @throws ManagerException
      */
-    public boolean load() throws ManagerException  {
-        if (this.DAO == null) {
+    public static boolean load() throws ManagerException  {
+        if (ShapeManager.DAO == null) {
             throw new ManagerException("No DAO set for loading data.");
         }
 
         try {
-            this.DAO.load();
-            this.shapes = this.DAO.getShapes();
+            ShapeManager.DAO.load();
+            ShapeManager.shapes = ShapeManager.DAO.getShapes();
 
             return true;
         } catch (DAOException exception) {

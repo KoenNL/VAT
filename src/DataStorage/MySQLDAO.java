@@ -1,7 +1,5 @@
 package DataStorage;
 
-import BusinessLogic.ExceptionHandler;
-import BusinessLogic.ShapeFactory;
 import Domain.*;
 import Main.Config;
 
@@ -48,49 +46,14 @@ public class MySQLDAO extends ShapeDAO {
      * @throws SQLException
      * @throws DAOException
      */
-    private void prepareShapeValues(PreparedStatement statement, Shape shape) throws SQLException, DAOException {
+    private void prepareShapeValues(PreparedStatement statement, Shape shape) throws SQLException {
         statement.setInt(1, shape.getId());
-        statement.setString(2, shape.getClass().getSimpleName());
+        statement.setString(2, shape.getType());
 
-        switch (shape.getClass().getSimpleName()) {
-            case "Sphere":
-                Sphere sphere = ShapeFactory.toSphere(shape);
-                statement.setDouble(3, 0);
-                statement.setDouble(4, 0);
-                statement.setDouble(5, 0);
-                statement.setDouble(6, sphere.getRadius());
-                break;
-            case "Cylinder":
-                Cylinder cylinder = ShapeFactory.toCylinder(shape);
-                statement.setDouble(3, 0);
-                statement.setDouble(4, 0);
-                statement.setDouble(5, cylinder.getHeight());
-                statement.setDouble(6, cylinder.getRadius());
-                break;
-            case "Cone":
-                Cone cone = ShapeFactory.toCone(shape);
-                statement.setDouble(3, 0);
-                statement.setDouble(4, 0);
-                statement.setDouble(5, cone.getHeight());
-                statement.setDouble(6, cone.getRadius());
-                break;
-            case "RectangularPrism":
-                RectangularPrism rectangularPrism = ShapeFactory.toRectangularPrism(shape);
-                statement.setDouble(3, rectangularPrism.getLength());
-                statement.setDouble(4, rectangularPrism.getWidth());
-                statement.setDouble(5, rectangularPrism.getHeight());
-                statement.setDouble(6, 0);
-                break;
-            case "SquarePyramid":
-                SquarePyramid squarePyramid = ShapeFactory.toSquarePyramid(shape);
-                statement.setDouble(3, squarePyramid.getLength());
-                statement.setDouble(4, squarePyramid.getWidth());
-                statement.setDouble(5, squarePyramid.getHeight());
-                statement.setDouble(6, 0);
-                break;
-            default:
-                throw new DAOException("Invalid shape " + shape.getClass().getSimpleName());
-        }
+        statement.setDouble(3, shape.getLength());
+        statement.setDouble(4, shape.getWidth());
+        statement.setDouble(5, shape.getHeight());
+        statement.setDouble(6, shape.getRadius());
     }
 
     @Override
