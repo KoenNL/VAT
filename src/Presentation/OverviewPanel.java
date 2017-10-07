@@ -93,6 +93,8 @@ public class OverviewPanel extends Panel {
         this.add(this.shapeListField, gridBagConstraints);
 
         this.saveButton = new JButton("Save");
+        this.saveButton.setActionCommand("saveShapes");
+        this.saveButton.addActionListener(this.overviewButtonHandler);
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;

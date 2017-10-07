@@ -26,6 +26,7 @@ public class MySQLDAO extends ShapeDAO {
 
     @Override
     public boolean save() throws DAOException {
+        this.delete();
         try {
             String sql = "INSERT INTO `Shape` (`id`, `type`, `radius`, `length`, `width`, `height`) VALUES(?, ?, ?, ?, ?, ?);";
 
@@ -98,6 +99,7 @@ public class MySQLDAO extends ShapeDAO {
             switch (resultSet.getString("type")) {
                 case "Sphere":
                     Sphere sphere = new Sphere(resultSet.getDouble("radius"));
+                    sphere.setId(resultSet.getInt("id"));
 
                     shapes.add(sphere);
                     break;
@@ -106,6 +108,7 @@ public class MySQLDAO extends ShapeDAO {
                             resultSet.getDouble("raduis"),
                             resultSet.getDouble("height")
                     );
+                    cylinder.setId(resultSet.getInt("id"));
 
                     shapes.add(cylinder);
                     break;
@@ -114,6 +117,7 @@ public class MySQLDAO extends ShapeDAO {
                             resultSet.getDouble("raduis"),
                             resultSet.getDouble("height")
                     );
+                    cone.setId(resultSet.getInt("id"));
 
                     shapes.add(cone);
                     break;
@@ -123,6 +127,7 @@ public class MySQLDAO extends ShapeDAO {
                             resultSet.getDouble("width"),
                             resultSet.getDouble("height")
                     );
+                    rectangularPrism.setId(resultSet.getInt("id"));
 
                     shapes.add(rectangularPrism);
                     break;
@@ -132,6 +137,7 @@ public class MySQLDAO extends ShapeDAO {
                             resultSet.getDouble("width"),
                             resultSet.getDouble("height")
                     );
+                    squarePyramid.setId(resultSet.getInt("id"));
 
                     shapes.add(squarePyramid);
                     break;

@@ -25,12 +25,15 @@ public class ShapeManager {
 
     /**
      * Add a shape to the manager.
+     *
      * @param shape Shape
      */
     public void addShape(Shape shape) {
         // Set the id of the shape.
-        if (this.shapes.size() > 0 && this.shapes.get(shape.getId()) == null) {
-            shape.setId(this.shapes.size());
+        if (this.shapes.size() > 0 && shape.getId() == 0) {
+            shape.setId(this.shapes.size() + 1);
+        } else {
+            shape.setId(1);
         }
 
         this.shapes.add(shape);
@@ -38,6 +41,7 @@ public class ShapeManager {
 
     /**
      * Get all shapes.
+     *
      * @return ArrayList<Shape>
      */
     public ArrayList<Shape> getShapes() {
@@ -46,6 +50,7 @@ public class ShapeManager {
 
     /**
      * Get all shape types.
+     *
      * @return ArrayList<String>
      */
     public ArrayList<String> getShapeTypes() {
@@ -54,6 +59,7 @@ public class ShapeManager {
 
     /**
      * Set the data access object.
+     *
      * @param DAO ShapeDAO
      */
     public void setDAO(ShapeDAO DAO) {
@@ -61,7 +67,20 @@ public class ShapeManager {
     }
 
     /**
+     * Get the type of loaded DAO. If no DAO is loaded null is returned.
+     *
+     * @return String
+     */
+    public String getDAOType() {
+        if (this.DAO == null) {
+            return null;
+        }
+        return this.DAO.getClass().getSimpleName();
+    }
+
+    /**
      * Calculate the total volume of all set shapes.
+     *
      * @return double
      */
     public double calculateTotalVolume() {
@@ -76,6 +95,7 @@ public class ShapeManager {
 
     /**
      * Save the current list of shapes with the set DAO.
+     *
      * @return boolean
      * @throws BusinessLogicException
      */
@@ -95,6 +115,7 @@ public class ShapeManager {
 
     /**
      * Load a list of shapes with the set DAO.
+     *
      * @return boolean
      * @throws BusinessLogicException
      */
@@ -115,6 +136,7 @@ public class ShapeManager {
 
     /**
      * Delete a shape from the list.
+     *
      * @param shape Shape
      * @return boolean
      */

@@ -22,8 +22,8 @@ public class OverviewButtonHandler implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "save":
-
+            case "saveShapes":
+                this.saveShapes();
                 break;
             case "loadShapes":
                 this.loadShapes();
@@ -43,13 +43,28 @@ public class OverviewButtonHandler implements ActionListener {
         }
     }
 
-    private void save() {
-
+    private void saveShapes() {
+        try {
+            if (this.overviewPanel.getShapeManager().getDAOType() == null) {
+                this.overviewPanel.getShapeManager().setDAO(new MySQLDAO(new Config()));
+                if (this.overviewPanel.getShapeManager().save()) {
+                    this.overviewPanel.setInfo("Shapes saved", OverviewPanel.INFO_SUCCESS);
+                } else {
+                    this.overviewPanel.setInfo("Shapes not saved", OverviewPanel.INFO_WARNING);
+                }
+            }
+        } catch (DAOException exception) {
+            ExceptionHandler.handleException(exception.getException(), exception.getFriendlyMessage());
+        } catch (BusinessLogicException exception) {
+            this.overviewPanel.setInfo("Unable to save shapes", OverviewPanel.INFO_DANGER);
+        }
     }
 
     private void loadShapes() {
         try {
-            this.overviewPanel.getShapeManager().setDAO(new MySQLDAO(new Config()));
+            if (this.overviewPanel.getShapeManager().getDAOType() == null) {
+                this.overviewPanel.getShapeManager().setDAO(new MySQLDAO(new Config()));
+            }
             if (this.overviewPanel.getShapeManager().load()) {
                 this.overviewPanel.setInfo("Shapes loaded", OverviewPanel.INFO_SUCCESS);
                 this.overviewPanel.refreshShapeList();

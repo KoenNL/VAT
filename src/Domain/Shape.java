@@ -2,7 +2,7 @@ package Domain;
 
 abstract public class Shape {
 
-    private int id;
+    private int id = 0;
     protected double length = 0.0;
     protected double width = 0.0;
     protected double height = 0.0;
