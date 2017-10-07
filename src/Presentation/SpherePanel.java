@@ -9,8 +9,8 @@ public class SpherePanel extends ShapePanel {
 
     private JTextField radiusField;
 
-    public SpherePanel(int rows, int columns, Shape shape, OverviewPanel overviewPanel) {
-        super(rows, columns, shape, overviewPanel);
+    public SpherePanel(Shape shape, OverviewPanel overviewPanel) {
+        super(shape, overviewPanel);
     }
 
     @Override

@@ -9,8 +9,8 @@ public class ConePanel extends ShapePanel {
 
     private JTextField radiusField, heightField;
 
-    public ConePanel(int rows, int columns, Shape shape, OverviewPanel overviewPanel) {
-        super(rows, columns, shape, overviewPanel);
+    public ConePanel(Shape shape, OverviewPanel overviewPanel) {
+        super(shape, overviewPanel);
     }
 
     @Override

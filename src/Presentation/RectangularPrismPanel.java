@@ -9,8 +9,8 @@ public class RectangularPrismPanel extends ShapePanel {
 
     private JTextField lengthField, widthField, heightField;
 
-    public RectangularPrismPanel(int rows, int columns, Shape shape, OverviewPanel overviewPanel) {
-        super(rows, columns, shape, overviewPanel);
+    public RectangularPrismPanel(Shape shape, OverviewPanel overviewPanel) {
+        super(shape, overviewPanel);
     }
 
     @Override

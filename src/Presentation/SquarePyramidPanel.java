@@ -9,8 +9,8 @@ public class SquarePyramidPanel extends ShapePanel {
 
     private JTextField lengthField, widthField, heightField;
 
-    public SquarePyramidPanel(int rows, int columns, Shape shape, OverviewPanel overviewPanel) {
-        super(rows, columns, shape, overviewPanel);
+    public SquarePyramidPanel(Shape shape, OverviewPanel overviewPanel) {
+        super(shape, overviewPanel);
     }
 
     @Override

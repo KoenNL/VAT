@@ -8,46 +8,66 @@ import java.util.ArrayList;
 
 public class ShapeManager {
 
-    private static ArrayList<Shape> shapes = new ArrayList<Shape>();
-    private static ShapeDAO DAO;
+    private ArrayList<Shape> shapes;
+    private ArrayList<String> shapeTypes;
+    private ShapeDAO DAO;
+
+    public ShapeManager() {
+        this.shapeTypes = new ArrayList<String>();
+        this.shapeTypes.add("Sphere");
+        this.shapeTypes.add("Cylinder");
+        this.shapeTypes.add("Cone");
+        this.shapeTypes.add("RectangularPrism");
+        this.shapeTypes.add("SquarePyramid");
+
+        this.shapes = new ArrayList<Shape>();
+    }
 
     /**
      * Add a shape to the manager.
      * @param shape Shape
      */
-    public static void addShape(Shape shape) {
+    public void addShape(Shape shape) {
         // Set the id of the shape.
-        if (ShapeManager.shapes.get(shape.getId()) == null) {
-            shape.setId(ShapeManager.shapes.size());
+        if (this.shapes.size() > 0 && this.shapes.get(shape.getId()) == null) {
+            shape.setId(this.shapes.size());
         }
 
-        ShapeManager.shapes.add(shape);
+        this.shapes.add(shape);
     }
 
     /**
      * Get all shapes.
      * @return ArrayList<Shape>
      */
-    public static ArrayList<Shape> getShapes() {
-        return ShapeManager.shapes;
+    public ArrayList<Shape> getShapes() {
+        return this.shapes;
+    }
+
+    /**
+     * Get all shape types.
+     * @return ArrayList<String>
+     */
+    public ArrayList<String> getShapeTypes() {
+        return this.shapeTypes;
     }
 
     /**
      * Set the data access object.
      * @param DAO ShapeDAO
      */
-    public static void setDAO(ShapeDAO DAO) {
-        ShapeManager.DAO = DAO;
+    public void setDAO(ShapeDAO DAO) {
+        this.DAO = DAO;
     }
 
     /**
      * Calculate the total volume of all set shapes.
      * @return double
      */
-    public static double calculateTotalVolume() {
+    public double calculateTotalVolume() {
         double totalVolume = 0.0;
 
-        for (Shape shape : ShapeManager.shapes) {
+        for (Shape shape : this.shapes) {
             totalVolume += shape.calculateVolume();
         }
 
@@ -59,15 +79,15 @@ public class ShapeManager {
      * @return boolean
      * @throws ManagerException
      */
-    public static boolean save() throws ManagerException {
-        if (ShapeManager.DAO == null) {
+    public boolean save() throws ManagerException {
+        if (this.DAO == null) {
             throw new ManagerException("No DAO set for saving data.");
         }
 
         try {
-            ShapeManager.DAO.setShapes(ShapeManager.shapes);
+            this.DAO.setShapes(this.shapes);
 
-            return ShapeManager.DAO.save();
+            return this.DAO.save();
         } catch (DAOException exception) {
             throw new ManagerException("Unable to save shapes.", exception);
         }
@@ -78,14 +98,14 @@ public class ShapeManager {
      * @return boolean
      * @throws ManagerException
      */
-    public static boolean load() throws ManagerException  {
-        if (ShapeManager.DAO == null) {
+    public boolean load() throws ManagerException  {
+        if (this.DAO == null) {
             throw new ManagerException("No DAO set for loading data.");
         }
 
         try {
-            ShapeManager.DAO.load();
-            ShapeManager.shapes = ShapeManager.DAO.getShapes();
+            this.DAO.load();
+            this.shapes = this.DAO.getShapes();
 
             return true;
         } catch (DAOException exception) {

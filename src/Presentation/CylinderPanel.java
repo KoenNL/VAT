@@ -9,8 +9,8 @@ public class CylinderPanel extends ShapePanel {
 
     private JTextField radiusField, heightField;
 
-    public CylinderPanel(int rows, int columns, Shape shape, OverviewPanel overviewPanel) {
-        super(rows, columns, shape, overviewPanel);
+    public CylinderPanel(Shape shape, OverviewPanel overviewPanel) {
+        super(shape, overviewPanel);
     }
 
     @Override

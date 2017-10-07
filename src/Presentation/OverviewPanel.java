@@ -15,16 +15,22 @@ public class OverviewPanel extends Panel {
     private JScrollPane shapeListField;
     private JComboBox newShapeSelectorField;
     private JLabel newShapeSelectorLabel, shapeListLabel, totalVolumeLabel;
+    private OverviewButtonHandler overviewButtonHandler;
+    private ShapeManager shapeManager;
 
-    public OverviewPanel(int rows, int columns) {
-        super(rows, columns);
+    public OverviewPanel(ShapeManager shapeManager) {
+        super();
+
+        this.overviewButtonHandler = new OverviewButtonHandler(this);
+        this.shapeManager = shapeManager;
 
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-        this.infoBox = new JTextField(10);
+        this.infoBox = new JTextField();
         this.infoBox.setEditable(false);
+        this.infoBox.setHorizontalAlignment(JTextField.CENTER);
         gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridwidth = 5;
@@ -35,6 +41,11 @@ public class OverviewPanel extends Panel {
         this.add(this.infoBox, gridBagConstraints);
 
         this.newShapeSelectorField = new JComboBox();
+
+        for (String item : this.shapeManager.getShapeTypes()) {
+            this.newShapeSelectorField.addItem(item);
+        }
+
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridwidth = 2;
@@ -53,13 +64,17 @@ public class OverviewPanel extends Panel {
         gridBagConstraints.weightx = 1;
         this.add(this.newShapeButton, gridBagConstraints);
 
-        JList<Shape> shapeList = new JList(ShapeManager.getShapes().toArray());
+        // TODO remove this dummy code :)
+        Sphere sphere = new Sphere(10);
+        this.shapeManager.addShape(sphere);
+
+        JList<Shape> shapeList = new JList(this.shapeManager.getShapes().toArray());
         shapeList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         shapeList.setLayoutOrientation(JList.VERTICAL);
         shapeList.setVisibleRowCount(-1);
 
         this.shapeListField = new JScrollPane(shapeList);
-        this.shapeListField.setPreferredSize(new Dimension(250, 80));
+        this.shapeListField.setPreferredSize(new Dimension(250, 150));
 
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -75,7 +90,7 @@ public class OverviewPanel extends Panel {
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.insets = new Insets(0, 10, 0, 0);
         gridBagConstraints.weightx = 1;
         this.add(this.saveButton, gridBagConstraints);
@@ -83,8 +98,8 @@ public class OverviewPanel extends Panel {
         this.loadButton = new JButton("Load");
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.insets = new Insets(0, 10, 0, 0);
         gridBagConstraints.weightx = 1;
         this.add(this.loadButton, gridBagConstraints);
@@ -108,14 +123,66 @@ public class OverviewPanel extends Panel {
         this.add(this.deleteButton, gridBagConstraints);
 
         this.calculateTotalButton = new JButton("Calculate total");
+        this.calculateTotalButton.setActionCommand("calculateTotalVolume");
+        this.calculateTotalButton.addActionListener(this.overviewButtonHandler);
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.insets = new Insets(0, 10, 0, 0);
         gridBagConstraints.weightx = 1;
         this.add(this.calculateTotalButton, gridBagConstraints);
     }
 
+    /**
+     * Set the info for the info box.
+     *
+     * @param info String
+     */
+    public void setInfo(String info) {
+        this.setInfo(info, "");
+    }
+
+    /**
+     * Set the info for the info box with a given type to apply a color to the text.
+     *
+     * @param info String the text to display
+     * @param type String the type of text. Available types: info, success, warning, danger and none.
+     */
+    public void setInfo(String info, String type) {
+        switch (type) {
+            case "warning":
+                this.infoBox.setBackground(Color.YELLOW);
+                this.infoBox.setForeground(Color.BLACK);
+                break;
+            case "danger":
+                this.infoBox.setBackground(Color.RED);
+                this.infoBox.setForeground(Color.WHITE);
+                break;
+            case "info":
+                this.infoBox.setBackground(Color.BLUE);
+                this.infoBox.setForeground(Color.WHITE);
+                break;
+            case "success":
+                this.infoBox.setBackground(Color.GREEN);
+                this.infoBox.setForeground(Color.WHITE);
+                break;
+            default:
+                this.infoBox.setBackground(Color.WHITE);
+                this.infoBox.setForeground(Color.BLACK);
+                break;
+        }
+
+        this.infoBox.setText(info);
+    }
+
+    /**
+     * Get the shape manager.
+     *
+     * @return ShapeManager
+     */
+    public ShapeManager getShapeManager() {
+        return shapeManager;
+    }
 }

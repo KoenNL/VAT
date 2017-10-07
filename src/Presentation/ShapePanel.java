@@ -9,8 +9,8 @@ abstract public class ShapePanel extends Panel {
     protected Shape shape;
     protected JButton saveButton, cancelButton;
 
-    public ShapePanel(int rows, int columns, Shape shape, OverviewPanel overviewPanel) {
-        super(rows, columns);
+    public ShapePanel(Shape shape, OverviewPanel overviewPanel) {
+        super();
     }
 
     abstract public Shape toShape();
