@@ -29,6 +29,7 @@ public class CylinderPanel extends ShapePanel {
 
         // Create radius field
         this.radiusField = new JTextField(6);
+        this.radiusField.setText(String.format("%.2f", shape.getRadius()));
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
@@ -50,6 +51,7 @@ public class CylinderPanel extends ShapePanel {
 
         // Create height field
         this.heightField = new JTextField(6);
+        this.heightField.setText(String.format("%.2f", shape.getHeight()));
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;

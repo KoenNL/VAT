@@ -34,8 +34,8 @@ public class ShapeFrameFactory {
                 throw new BusinessLogicException("Invalid type '" + type + "' provided for a new shape.");
         }
 
-        shapeFrame.addPanel(shapePanel);
-        shapeFrame.addPanel(new ShapeButtonPanel(shapePanel));
+        shapeFrame.setShapePanel(shapePanel);
+        shapeFrame.setShapeButtonPanel(new ShapeButtonPanel(shapePanel));
     }
 
     /**
@@ -67,8 +67,8 @@ public class ShapeFrameFactory {
                 throw new BusinessLogicException("Invalid type '" + shape.getType() + "' provided for a new shape.");
         }
 
-        shapeFrame.addPanel(shapePanel);
-        shapeFrame.addPanel(new ShapeButtonPanel(shapePanel));
+        shapeFrame.setShapePanel(shapePanel);
+        shapeFrame.setShapeButtonPanel(new ShapeButtonPanel(shapePanel));
     }
 
 }

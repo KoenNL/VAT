@@ -29,6 +29,7 @@ public class SpherePanel extends ShapePanel {
 
         // Create radius field
         this.radiusField = new JTextField(6);
+        this.radiusField.setText(String.format("%.2f", shape.getRadius()));
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;

@@ -28,6 +28,7 @@ public class SquarePyramidPanel extends ShapePanel {
 
         // Create length field
         this.lengthField = new JTextField(6);
+        this.lengthField.setText(String.format("%.2f", shape.getLength()));
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
@@ -49,6 +50,7 @@ public class SquarePyramidPanel extends ShapePanel {
 
         // Create width field
         this.widthField = new JTextField(6);
+        this.widthField.setText(String.format("%.2f", shape.getWidth()));
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
@@ -70,6 +72,7 @@ public class SquarePyramidPanel extends ShapePanel {
 
         // Create height field
         this.heightField = new JTextField(6);
+        this.heightField.setText(String.format("%.2f", shape.getHeight()));
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
