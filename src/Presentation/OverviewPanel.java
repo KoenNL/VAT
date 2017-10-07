@@ -7,14 +7,22 @@ import BusinessLogic.ShapeManager;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class OverviewPanel extends Panel {
 
+    public static final String
+            INFO_INFO = "info",
+            INFO_SUCCESS = "success",
+            INFO_WARNING = "warning",
+            INFO_DANGER = "danger",
+            INFO_DEFAULT = "";
+
     private JButton loadButton, saveButton, calculateTotalButton, deleteButton, editButton, newShapeButton;
     private JTextField totalVolumeField, infoBox;
+    private JList<Shape> shapeList;
     private JScrollPane shapeListField;
     private JComboBox newShapeSelectorField;
-    private JLabel newShapeSelectorLabel, shapeListLabel, totalVolumeLabel;
     private OverviewButtonHandler overviewButtonHandler;
     private ShapeManager shapeManager;
 
@@ -68,10 +76,10 @@ public class OverviewPanel extends Panel {
         Sphere sphere = new Sphere(10);
         this.shapeManager.addShape(sphere);
 
-        JList<Shape> shapeList = new JList(this.shapeManager.getShapes().toArray());
-        shapeList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        shapeList.setLayoutOrientation(JList.VERTICAL);
-        shapeList.setVisibleRowCount(-1);
+        this.shapeList = new JList(this.shapeManager.getShapes().toArray());
+        this.shapeList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        this.shapeList.setLayoutOrientation(JList.VERTICAL);
+        this.shapeList.setVisibleRowCount(-1);
 
         this.shapeListField = new JScrollPane(shapeList);
         this.shapeListField.setPreferredSize(new Dimension(250, 150));
@@ -114,6 +122,8 @@ public class OverviewPanel extends Panel {
         this.add(this.editButton, gridBagConstraints);
 
         this.deleteButton = new JButton("Delete");
+        this.deleteButton.setActionCommand("deleteShape");
+        this.deleteButton.addActionListener(this.overviewButtonHandler);
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 4;
@@ -184,5 +194,20 @@ public class OverviewPanel extends Panel {
      */
     public ShapeManager getShapeManager() {
         return shapeManager;
+    }
+
+    /**
+     * Get the selected shape from the shape list.
+     * @return Shape
+     */
+    public Shape getSelectedShape() {
+        return this.shapeList.getSelectedValue();
+    }
+
+    /**
+     * Refresh the contents of the shape list.
+     */
+    public void refreshShapeList() {
+        this.shapeList.setListData(new Vector(this.shapeManager.getShapes()));
     }
 }

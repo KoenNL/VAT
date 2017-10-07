@@ -113,4 +113,17 @@ public class ShapeManager {
         }
     }
 
+    /**
+     * Delete a shape from the list.
+     * @param shape Shape
+     * @return boolean
+     */
+    public boolean deleteShape(Shape shape) {
+        if (this.shapes.size() == 0 || this.shapes.get(shape.getId()) == null) {
+            return false;
+        }
+        this.shapes.remove(shape);
+        return true;
+    }
+
 }
