@@ -13,6 +13,6 @@ public class Cone extends Shape {
 
     @Override
     public double calculateVolume() {
-        return 1 / 3 * Math.PI * Math.pow(this.radius, 2) * this.height;
+        return 1.0 / 3.0 * Math.PI * Math.pow(this.radius, 2) * this.height;
     }
 }

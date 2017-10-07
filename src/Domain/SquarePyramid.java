@@ -15,6 +15,6 @@ public class SquarePyramid extends Pyramid {
 
     @Override
     public double calculateVolume() {
-        return 1 / 3 * this.length * this.width * this.height;
+        return 1.0 / 3.0 * this.length * this.width * this.height;
     }
 }
