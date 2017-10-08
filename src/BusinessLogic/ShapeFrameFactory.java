@@ -28,7 +28,7 @@ public class ShapeFrameFactory {
                 shapePanel = new RectangularPrismPanel(new RectangularPrism(0.00, 0.00, 0.00));
                 break;
             case "SquarePyramid":
-                shapePanel = new SquarePyramidPanel(new SquarePyramid(0.00, 0.00, 0.00));
+                shapePanel = new SquarePyramidPanel(new SquarePyramid(0.00, 0.00));
                 break;
             default:
                 throw new BusinessLogicException("Invalid type '" + type + "' provided for a new shape.");

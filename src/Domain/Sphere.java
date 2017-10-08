@@ -11,6 +11,6 @@ public class Sphere extends Shape {
 
     @Override
     public double calculateVolume() {
-        return 4 / 3 * Math.PI * Math.pow(this.radius, 3);
+        return 4.0 / 3.0 * Math.PI * Math.pow(this.radius, 3);
     }
 }

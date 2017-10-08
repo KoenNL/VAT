@@ -134,7 +134,6 @@ public class MySQLDAO extends ShapeDAO {
                 case "SquarePyramid":
                     SquarePyramid squarePyramid = new SquarePyramid(
                             resultSet.getDouble("length"),
-                            resultSet.getDouble("width"),
                             resultSet.getDouble("height")
                     );
                     squarePyramid.setId(resultSet.getInt("id"));

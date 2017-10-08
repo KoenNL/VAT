@@ -1,20 +1,18 @@
 package Domain;
 
-public class SquarePyramid extends Pyramid {
+public class SquarePyramid extends Shape {
 
     /**
      * @param length double
-     * @param width double
      * @param height double
      */
-    public SquarePyramid(double length, double width, double height) {
+    public SquarePyramid(double length, double height) {
         this.length = length;
-        this.width = width;
         this.height = height;
     }
 
     @Override
     public double calculateVolume() {
-        return 1.0 / 3.0 * this.length * this.width * this.height;
+        return Math.pow(this.length, 2) * this.height / 3;
     }
 }
