@@ -8,11 +8,6 @@ import java.util.ArrayList;
 abstract public class ShapeDAO {
 
     protected ArrayList<Shape> shapes;
-    protected Config config;
-
-    public ShapeDAO(Config config) {
-        this.config = config;
-    }
 
     /**
      * Get all shapes.

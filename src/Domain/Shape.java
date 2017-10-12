@@ -1,6 +1,8 @@
 package Domain;
 
-abstract public class Shape {
+import java.io.Serializable;
+
+abstract public class Shape implements Serializable {
 
     private int id = 0;
     protected double length = 0.0;

@@ -11,8 +11,6 @@ public class MySQLShapeDAO extends ShapeDAO {
     private Connection connection;
 
     public MySQLShapeDAO(Config config) throws DAOException {
-        super(config);
-
         try {
             this.connection = DriverManager.getConnection(
                     "jdbc:mysql://" + config.getDatabaseHost() + ":3306/" + config.getDatabaseName(),
@@ -21,7 +19,6 @@ public class MySQLShapeDAO extends ShapeDAO {
         } catch (Exception exception) {
             throw new DAOException("Could not make a connection with the database", exception);
         }
-
     }
 
     @Override
