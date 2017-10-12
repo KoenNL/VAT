@@ -2,7 +2,7 @@ package Main;
 
 import BusinessLogic.ExceptionHandler;
 import BusinessLogic.ShapeManager;
-import Presentation.OverviewFrame;
+import Presentation.Frame;
 import Presentation.OverviewPanel;
 
 public class Main {
@@ -11,7 +11,7 @@ public class Main {
         // Set debugging true for development, false for production.
         ExceptionHandler.setDebug(true);
 
-        OverviewFrame overviewFrame = new OverviewFrame("VAT");
+        Frame overviewFrame = new Frame("VAT");
         overviewFrame.addPanel(new OverviewPanel(new ShapeManager()));
     }
 

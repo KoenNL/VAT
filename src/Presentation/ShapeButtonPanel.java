@@ -3,7 +3,7 @@ package Presentation;
 import javax.swing.*;
 import java.awt.*;
 
-public class ShapeButtonPanel extends Panel {
+public class ShapeButtonPanel extends JPanel {
 
     private ShapeButtonHandler shapeButtonHandler;
     private ShapePanel shapePanel;

@@ -1,15 +1,13 @@
 package Presentation;
 
 import Domain.Shape;
-import Domain.Sphere;
 import BusinessLogic.ShapeManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Vector;
 
-public class OverviewPanel extends Panel {
+public class OverviewPanel extends JPanel {
 
     public static final String
             INFO_INFO = "info",
@@ -19,7 +17,7 @@ public class OverviewPanel extends Panel {
             INFO_DEFAULT = "";
 
     private JButton loadButton, saveButton, calculateTotalButton, deleteButton, editButton, newShapeButton;
-    private JTextField totalVolumeField, infoBox;
+    private JTextField infoBox;
     private JList<Shape> shapeList;
     private JScrollPane shapeListField;
     private JComboBox newShapeSelectorField;

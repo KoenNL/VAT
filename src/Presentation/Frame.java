@@ -2,7 +2,7 @@ package Presentation;
 
 import javax.swing.*;
 
-abstract public class Frame extends JFrame {
+public class Frame extends JFrame {
 
     public Frame(String title) {
         this.setTitle(title);
@@ -10,7 +10,7 @@ abstract public class Frame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void addPanel(Panel panel) {
+    public void addPanel(JPanel panel) {
         this.add(panel);
         this.pack();
         this.setVisible(true);

@@ -58,7 +58,7 @@ public class ShapeFrame extends Frame {
     }
 
     @Override
-    public void addPanel(Panel shapePanel) {
+    public void addPanel(JPanel shapePanel) {
         this.layoutPanel.add(shapePanel);
         this.pack();
         this.setVisible(true);

@@ -5,7 +5,7 @@ import Domain.Shape;
 import javax.swing.*;
 import java.awt.*;
 
-abstract public class ShapePanel extends Panel {
+abstract public class ShapePanel extends JPanel {
 
     protected Shape shape;
 
