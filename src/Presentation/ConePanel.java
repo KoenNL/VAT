@@ -1,5 +1,6 @@
 package Presentation;
 
+import BusinessLogic.FormValidator;
 import Domain.Cone;
 import Domain.Shape;
 
@@ -76,23 +77,7 @@ public class ConePanel extends ShapePanel {
     }
 
     public boolean validateForm() {
-        this.shape = this.toShape();
-
-        boolean valid = true;
-        if (this.shape.getRadius() == 0.00) {
-            this.radiusLabel.setForeground(Color.RED);
-            valid = false;
-        } else {
-            this.radiusLabel.setForeground(Color.BLACK);
-        }
-
-        if (this.shape.getHeight() == 0.00) {
-            this.heightLabel.setForeground(Color.RED);
-            valid = false;
-        } else {
-            this.heightLabel.setForeground(Color.BLACK);
-        }
-
-        return valid;
+        return FormValidator.validateDouble(this.radiusField, this.radiusLabel) &&
+                FormValidator.validateDouble(this.heightField, this.heightLabel);
     }
 }

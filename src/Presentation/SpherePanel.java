@@ -1,5 +1,6 @@
 package Presentation;
 
+import BusinessLogic.FormValidator;
 import Domain.Shape;
 import Domain.Sphere;
 
@@ -51,16 +52,6 @@ public class SpherePanel extends ShapePanel {
     }
 
     public boolean validateForm() {
-        this.shape = this.toShape();
-
-        boolean valid = true;
-        if (this.shape.getRadius() == 0.00) {
-            this.radiusLabel.setForeground(Color.RED);
-            valid = false;
-        } else {
-            this.radiusLabel.setForeground(Color.BLACK);
-        }
-
-        return valid;
+        return FormValidator.validateDouble(this.radiusField, this.radiusLabel);
     }
 }

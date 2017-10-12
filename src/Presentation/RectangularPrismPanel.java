@@ -1,5 +1,6 @@
 package Presentation;
 
+import BusinessLogic.FormValidator;
 import Domain.RectangularPrism;
 import Domain.Shape;
 
@@ -100,30 +101,8 @@ public class RectangularPrismPanel extends ShapePanel {
     }
 
     public boolean validateForm() {
-        this.shape = this.toShape();
-
-        boolean valid = true;
-        if (this.shape.getLength() == 0.00) {
-            this.lengthLabel.setForeground(Color.RED);
-            valid = false;
-        } else {
-            this.lengthLabel.setForeground(Color.BLACK);
-        }
-
-        if (this.shape.getHeight() == 0.00) {
-            this.heightLabel.setForeground(Color.RED);
-            valid = false;
-        } else {
-            this.heightLabel.setForeground(Color.BLACK);
-        }
-
-        if (this.shape.getHeight() == 0.00) {
-            this.heightLabel.setForeground(Color.RED);
-            valid = false;
-        } else {
-            this.heightLabel.setForeground(Color.BLACK);
-        }
-
-        return valid;
+        return FormValidator.validateDouble(this.lengthField, this.lengthLabel) &&
+                FormValidator.validateDouble(this.widthField, this.widthLabel) &&
+                FormValidator.validateDouble(this.heightField, this.heightLabel);
     }
 }
