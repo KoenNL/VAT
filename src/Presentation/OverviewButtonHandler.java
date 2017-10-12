@@ -4,7 +4,7 @@ import BusinessLogic.ExceptionHandler;
 import BusinessLogic.BusinessLogicException;
 import BusinessLogic.ShapeFrameFactory;
 import DataStorage.DAOException;
-import DataStorage.MySQLDAO;
+import DataStorage.MySQLShapeDAO;
 import Domain.Shape;
 import Main.Config;
 
@@ -49,7 +49,7 @@ public class OverviewButtonHandler implements ActionListener {
     private void saveShapes() {
         try {
             if (this.overviewPanel.getShapeManager().getDAOType() == null) {
-                this.overviewPanel.getShapeManager().setDAO(new MySQLDAO(new Config()));
+                this.overviewPanel.getShapeManager().setDAO(new MySQLShapeDAO(new Config()));
             }
             if (this.overviewPanel.getShapeManager().save()) {
                 this.overviewPanel.setInfo("Shapes saved", OverviewPanel.INFO_SUCCESS);
@@ -69,7 +69,7 @@ public class OverviewButtonHandler implements ActionListener {
     private void loadShapes() {
         try {
             if (this.overviewPanel.getShapeManager().getDAOType() == null) {
-                this.overviewPanel.getShapeManager().setDAO(new MySQLDAO(new Config()));
+                this.overviewPanel.getShapeManager().setDAO(new MySQLShapeDAO(new Config()));
             }
             if (this.overviewPanel.getShapeManager().load()) {
                 this.overviewPanel.setInfo("Shapes loaded", OverviewPanel.INFO_SUCCESS);

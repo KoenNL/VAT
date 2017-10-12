@@ -5,11 +5,11 @@ import Main.Config;
 
 import java.util.ArrayList;
 
-public class FileDAO extends ShapeDAO {
+public class FileShapeDAO extends ShapeDAO {
 
     private final ShapeFileParser fileParser;
 
-    public FileDAO(Config config, String fileType) throws DAOException {
+    public FileShapeDAO(Config config, String fileType) throws DAOException {
         super(config);
 
         switch (fileType) {

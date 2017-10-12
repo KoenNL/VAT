@@ -6,11 +6,11 @@ import Main.Config;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class MySQLDAO extends ShapeDAO {
+public class MySQLShapeDAO extends ShapeDAO {
 
     private Connection connection;
 
-    public MySQLDAO(Config config) throws DAOException {
+    public MySQLShapeDAO(Config config) throws DAOException {
         super(config);
 
         try {
@@ -49,7 +49,6 @@ public class MySQLDAO extends ShapeDAO {
      * @param statement PreparedStatement
      * @param shape     Shape
      * @throws SQLException
-     * @throws DAOException
      */
     private void prepareShapeValues(PreparedStatement statement, Shape shape) throws SQLException {
         statement.setInt(1, shape.getId());
