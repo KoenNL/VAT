@@ -170,9 +170,7 @@ public class FileShapeDAO extends ShapeDAO {
     private boolean saveToData() throws DAOException {
         try {
             ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(this.file));
-
-            stream.writeObject(new Integer(this.shapes.size()));
-
+            
             for (Shape shape : this.shapes) {
                 stream.writeObject(shape);
             }

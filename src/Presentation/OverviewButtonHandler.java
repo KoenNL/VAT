@@ -147,8 +147,12 @@ public class OverviewButtonHandler implements ActionListener {
      * Calculate the total volume of all loaded shapes.
      */
     private void calculateTotalVolume() {
-        double totalVolume = this.overviewPanel.getShapeManager().calculateTotalVolume();
-        this.overviewPanel.setInfo("The total volume is: " + String.format("%.2f", totalVolume), OverviewPanel.INFO_INFO);
+        if (this.overviewPanel.getShapeManager().getShapes().size() > 0) {
+            double totalVolume = this.overviewPanel.getShapeManager().calculateTotalVolume();
+            this.overviewPanel.setInfo("The total volume is: " + String.format("%.2f", totalVolume), OverviewPanel.INFO_INFO);
+        } else {
+            this.overviewPanel.setInfo("There are no shapes", OverviewPanel.INFO_INFO);
+        }
     }
 
     /**
@@ -198,7 +202,7 @@ public class OverviewButtonHandler implements ActionListener {
             return;
         }
         if (this.overviewPanel.getShapeManager().getShapes().size() == 0) {
-            this.overviewPanel.setInfo("There are no shapes");
+            this.overviewPanel.setInfo("There are no shapes", OverviewPanel.INFO_INFO);
             return;
         }
         try {
