@@ -7,18 +7,39 @@ import java.util.ArrayList;
 
 public class FileShapeDAO extends ShapeDAO {
 
-    private String fileType, fileName;
+    private String fileType;
+    private File file;
     private String CSVDelimiter = ";";
 
-    public FileShapeDAO(String fileType, String fileName) throws DAOException {
-        this.fileType = fileType;
-        this.fileName = fileName;
+    /**
+     * @param fileName String
+     */
+    public FileShapeDAO(File fileName) {
+        this.file = fileName;
+        this.fileType = FileShapeDAO.getFileExtension(this.file);
+    }
+
+    /**
+     * Get the file extension of the given file.
+     *
+     * @param file File
+     * @return String
+     */
+    public static String getFileExtension(File file) {
+        String extension = "";
+        String s = file.getName();
+        int i = s.lastIndexOf('.');
+
+        if (i > 0 && i < s.length() - 1) {
+            extension = s.substring(i + 1).toLowerCase();
+        }
+        return extension;
     }
 
     @Override
     public boolean save() throws DAOException {
         switch (this.fileType) {
-            case "CSV":
+            case "csv":
                 return this.saveToCSV();
             case "data":
                 return this.saveToData();
@@ -31,7 +52,7 @@ public class FileShapeDAO extends ShapeDAO {
     public boolean load() throws DAOException {
         this.shapes = new ArrayList<Shape>();
         switch (fileType) {
-            case "CSV":
+            case "csv":
                 return this.loadFromCSV();
             case "data":
                 return this.loadFromData();
@@ -45,9 +66,15 @@ public class FileShapeDAO extends ShapeDAO {
         return false;
     }
 
+    /**
+     * Save the list of shapes to a CSV file.
+     *
+     * @return boolean
+     * @throws DAOException on error
+     */
     private boolean saveToCSV() throws DAOException {
         try {
-            PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(this.fileName)));
+            PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(this.file)));
 
             String line;
 
@@ -63,7 +90,7 @@ public class FileShapeDAO extends ShapeDAO {
 
             printWriter.close();
         } catch (FileNotFoundException exception) {
-            throw new DAOException("File " + this.fileName + " not found.", exception);
+            throw new DAOException("File " + this.file + " not found.", exception);
         } catch (IOException exception) {
             throw new DAOException("Unable to save CSV file.", exception);
         }
@@ -71,9 +98,15 @@ public class FileShapeDAO extends ShapeDAO {
         return true;
     }
 
+    /**
+     * Load a CSV file with shapes and put them into a list.
+     *
+     * @return boolean
+     * @throws DAOException on error
+     */
     private boolean loadFromCSV() throws DAOException {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(this.fileName));
+            BufferedReader reader = new BufferedReader(new FileReader(this.file));
 
             String line;
 
@@ -121,16 +154,24 @@ public class FileShapeDAO extends ShapeDAO {
 
             reader.close();
         } catch (FileNotFoundException exception) {
-            throw new DAOException("File " + this.fileName + " not found.", exception);
+            throw new DAOException("File " + this.file + " not found.", exception);
         } catch (IOException exception) {
             throw new DAOException("Unable to load from data file.", exception);
         }
         return true;
     }
 
+    /**
+     * Save shapes as an object stream to a binary file.
+     *
+     * @return boolean
+     * @throws DAOException on error
+     */
     private boolean saveToData() throws DAOException {
         try {
-            ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(this.fileName));
+            ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(this.file));
+
+            stream.writeObject(new Integer(this.shapes.size()));
 
             for (Shape shape : this.shapes) {
                 stream.writeObject(shape);
@@ -138,26 +179,35 @@ public class FileShapeDAO extends ShapeDAO {
 
             stream.close();
         } catch (FileNotFoundException exception) {
-            throw new DAOException("File " + this.fileName + " not found.", exception);
+            throw new DAOException("File " + this.file + " not found.", exception);
         } catch (IOException exception) {
             throw new DAOException("Unable to save data file.", exception);
         }
         return true;
     }
 
+    /**
+     * Load shapes from a binary object stream file and put them into a list.
+     *
+     * @return boolean
+     * @throws DAOException on error
+     */
     private boolean loadFromData() throws DAOException {
+        ObjectInputStream stream;
         try {
-            ObjectInputStream stream = new ObjectInputStream(new FileInputStream(this.fileName));
+            stream = new ObjectInputStream(new FileInputStream(this.file));
 
             Shape shape;
 
-            while ((shape = (Shape) stream.readObject()) != null) {
-                this.shapes.add(shape);
+            try {
+                while ((shape = (Shape) stream.readObject()) != null) {
+                    this.shapes.add(shape);
+                }
+            } catch (EOFException exception) {
+                stream.close();
             }
-
-            stream.close();
         } catch (FileNotFoundException exception) {
-            throw new DAOException("File " + this.fileName + " not found.", exception);
+            throw new DAOException("File " + this.file + " not found.", exception);
         } catch (IOException exception) {
             throw new DAOException("Unable to load from data file.", exception);
         } catch (ClassNotFoundException exception) {

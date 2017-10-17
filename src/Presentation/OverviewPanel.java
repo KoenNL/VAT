@@ -16,11 +16,18 @@ public class OverviewPanel extends JPanel {
             INFO_DANGER = "danger",
             INFO_DEFAULT = "";
 
-    private JButton loadButton, saveButton, calculateTotalButton, deleteButton, editButton, newShapeButton;
+    private JButton loadButton,
+            saveButton,
+            calculateTotalButton,
+            deleteButton,
+            editButton,
+            newShapeButton,
+            importButton,
+            exportButton;
     private JTextField infoBox;
     private JList<Shape> shapeList;
     private JScrollPane shapeListField;
-    private JComboBox newShapeSelectorField;
+    private JComboBox<String> newShapeSelectorField;
     private OverviewButtonHandler overviewButtonHandler;
     private ShapeManager shapeManager;
 
@@ -96,7 +103,7 @@ public class OverviewPanel extends JPanel {
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.insets = new Insets(0, 10, 0, 0);
         gridBagConstraints.weightx = 1;
         this.add(this.saveButton, gridBagConstraints);
@@ -107,10 +114,32 @@ public class OverviewPanel extends JPanel {
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.insets = new Insets(0, 10, 0, 0);
         gridBagConstraints.weightx = 1;
         this.add(this.loadButton, gridBagConstraints);
+
+        this.exportButton = new JButton("Export");
+        this.exportButton.setActionCommand("exportShapes");
+        this.exportButton.addActionListener(this.overviewButtonHandler);
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.insets = new Insets(0, 10, 0, 0);
+        gridBagConstraints.weightx = 1;
+        this.add(this.exportButton, gridBagConstraints);
+
+        this.importButton = new JButton("Import");
+        this.importButton.setActionCommand("importShapes");
+        this.importButton.addActionListener(this.overviewButtonHandler);
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.insets = new Insets(0, 10, 0, 0);
+        gridBagConstraints.weightx = 1;
+        this.add(this.importButton, gridBagConstraints);
 
         this.editButton = new JButton("Edit");
         this.editButton.setActionCommand("editShape");
@@ -153,7 +182,7 @@ public class OverviewPanel extends JPanel {
      * @param info String
      */
     public void setInfo(String info) {
-        this.setInfo(info, "");
+        this.infoBox.setText(info);
     }
 
     /**
@@ -186,7 +215,7 @@ public class OverviewPanel extends JPanel {
                 break;
         }
 
-        this.infoBox.setText(info);
+        this.setInfo(info);
     }
 
     /**

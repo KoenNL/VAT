@@ -4,16 +4,19 @@ import BusinessLogic.ExceptionHandler;
 import BusinessLogic.BusinessLogicException;
 import BusinessLogic.ShapeFrameFactory;
 import DataStorage.DAOException;
+import DataStorage.FileShapeDAO;
 import DataStorage.MySQLShapeDAO;
 import Domain.Shape;
 import Main.Config;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class OverviewButtonHandler implements ActionListener {
 
     private OverviewPanel overviewPanel;
+    private JFileChooser fileChooser;
 
     public OverviewButtonHandler(OverviewPanel overviewPanel) {
         this.overviewPanel = overviewPanel;
@@ -40,6 +43,12 @@ public class OverviewButtonHandler implements ActionListener {
             case "calculateTotalVolume":
                 this.calculateTotalVolume();
                 break;
+            case "importShapes":
+                this.importShapes();
+                break;
+            case "exportShapes":
+                this.exportShapes();
+                break;
         }
     }
 
@@ -48,9 +57,8 @@ public class OverviewButtonHandler implements ActionListener {
      */
     private void saveShapes() {
         try {
-            if (this.overviewPanel.getShapeManager().getDAOType() == null) {
-                this.overviewPanel.getShapeManager().setDAO(new MySQLShapeDAO(new Config()));
-            }
+            this.overviewPanel.getShapeManager().setDAO(new MySQLShapeDAO(new Config()));
+
             if (this.overviewPanel.getShapeManager().save()) {
                 this.overviewPanel.setInfo("Shapes saved", OverviewPanel.INFO_SUCCESS);
             } else {
@@ -141,5 +149,73 @@ public class OverviewButtonHandler implements ActionListener {
     private void calculateTotalVolume() {
         double totalVolume = this.overviewPanel.getShapeManager().calculateTotalVolume();
         this.overviewPanel.setInfo("The total volume is: " + String.format("%.2f", totalVolume), OverviewPanel.INFO_INFO);
+    }
+
+    /**
+     * Prepare the file chooser.
+     */
+    private void prepareFileChooser() {
+        this.fileChooser = new JFileChooser();
+        this.fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+    }
+
+    /**
+     * Import shapes from a file.
+     */
+    private void importShapes() {
+        this.prepareFileChooser();
+
+        int returnValue = this.fileChooser.showOpenDialog(this.overviewPanel);
+        if (returnValue != JFileChooser.APPROVE_OPTION) {
+            this.overviewPanel.setInfo("No file selected");
+            return;
+        }
+        try {
+            this.overviewPanel.getShapeManager().setDAO(new FileShapeDAO(this.fileChooser.getSelectedFile()));
+            if (this.overviewPanel.getShapeManager().load()) {
+                this.overviewPanel.setInfo("Shapes loaded", OverviewPanel.INFO_SUCCESS);
+                this.overviewPanel.refreshShapeList();
+            } else {
+                this.overviewPanel.setInfo(
+                        "Could not load shapes from " + this.fileChooser.getSelectedFile().getName(),
+                        OverviewPanel.INFO_WARNING
+                );
+            }
+        } catch (BusinessLogicException exception) {
+            this.overviewPanel.setInfo(exception.getFriendlyMessage(), OverviewPanel.INFO_WARNING);
+        }
+    }
+
+    /**
+     * Export shapes to a file.
+     */
+    private void exportShapes() {
+        this.prepareFileChooser();
+
+        int returnValue = this.fileChooser.showOpenDialog(this.overviewPanel);
+        if (returnValue != JFileChooser.APPROVE_OPTION) {
+            this.overviewPanel.setInfo("No file selected");
+            return;
+        }
+        if (this.overviewPanel.getShapeManager().getShapes().size() == 0) {
+            this.overviewPanel.setInfo("There are no shapes");
+            return;
+        }
+        try {
+            this.overviewPanel.getShapeManager().setDAO(new FileShapeDAO(this.fileChooser.getSelectedFile()));
+            if (this.overviewPanel.getShapeManager().save()) {
+                this.overviewPanel.setInfo(
+                        "Exported shapes to " + this.fileChooser.getSelectedFile().getName(),
+                        OverviewPanel.INFO_SUCCESS
+                );
+            } else {
+                this.overviewPanel.setInfo(
+                        "Could not export shapes to " + this.fileChooser.getSelectedFile().getName(),
+                        OverviewPanel.INFO_WARNING
+                );
+            }
+        } catch (BusinessLogicException exception) {
+            this.overviewPanel.setInfo(exception.getFriendlyMessage(), OverviewPanel.INFO_WARNING);
+        }
     }
 }
