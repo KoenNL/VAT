@@ -194,19 +194,19 @@ public class OverviewPanel extends JPanel {
     public void setInfo(String info, String type) {
         switch (type) {
             case OverviewPanel.INFO_WARNING:
-                this.infoBox.setBackground(Color.YELLOW);
+                this.infoBox.setBackground(Color.decode("#b79f2a"));
                 this.infoBox.setForeground(Color.BLACK);
                 break;
             case OverviewPanel.INFO_DANGER:
-                this.infoBox.setBackground(Color.RED);
+                this.infoBox.setBackground(Color.decode("#b7432a"));
                 this.infoBox.setForeground(Color.WHITE);
                 break;
             case OverviewPanel.INFO_INFO:
-                this.infoBox.setBackground(Color.BLUE);
+                this.infoBox.setBackground(Color.decode("#2a7eb7"));
                 this.infoBox.setForeground(Color.WHITE);
                 break;
             case OverviewPanel.INFO_SUCCESS:
-                this.infoBox.setBackground(Color.GREEN);
+                this.infoBox.setBackground(Color.decode("#2ab767"));
                 this.infoBox.setForeground(Color.WHITE);
                 break;
             default:

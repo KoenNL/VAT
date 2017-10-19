@@ -18,7 +18,7 @@ public class FormValidator {
             label.setForeground(Color.BLACK);
             return true;
         }
-        label.setForeground(Color.RED);
+        label.setForeground(Color.decode("#b7432a"));
         return false;
     }
 
