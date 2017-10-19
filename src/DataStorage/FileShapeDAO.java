@@ -149,6 +149,8 @@ public class FileShapeDAO extends ShapeDAO {
                         shape.setId(Integer.parseInt(columns[0]));
                         this.shapes.add(shape);
                         break;
+                    default:
+                        throw new DAOException("Invalid shape data in CSV file.");
                 }
             }
 
