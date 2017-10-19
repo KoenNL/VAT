@@ -64,10 +64,6 @@ public class ShapeManager {
             this.DAO = DAO;
             this.DAO.setConfig(this.config);
         } catch (DAOException exception) {
-            System.out.println(config.getDatabaseHost());
-            System.out.println(config.getDatabaseName());
-            System.out.println(config.getDatabasePassword());
-            System.out.println(config.getDatabaseUser());
             throw new BusinessLogicException("Invalid config", exception);
         }
     }
