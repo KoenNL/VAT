@@ -24,12 +24,16 @@ public class ShapeManager {
     }
 
     /**
-     * Add a shape to the manager.
+     * Add a shape to the manager and set it's id if it doesn't have one.
      *
      * @param shape Shape
      */
     public void addShape(Shape shape) {
         this.shapes.add(shape);
+
+        if (shape.getId() == 0) {
+            shape.setId(this.shapes.indexOf(shape) + 1);
+        }
     }
 
     /**
