@@ -73,9 +73,7 @@ public class OverviewButtonHandler implements ActionListener {
      */
     private void loadShapes() {
         try {
-            if (this.overviewPanel.getShapeManager().getDAOType() == null) {
-                this.overviewPanel.getShapeManager().setDAO(new MySQLShapeDAO());
-            }
+            this.overviewPanel.getShapeManager().setDAO(new MySQLShapeDAO());
             if (this.overviewPanel.getShapeManager().load()) {
                 this.overviewPanel.setInfo("Shapes loaded", OverviewPanel.INFO_SUCCESS);
                 this.overviewPanel.refreshShapeList();
