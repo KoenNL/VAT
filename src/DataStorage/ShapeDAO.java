@@ -11,6 +11,7 @@ abstract public class ShapeDAO {
 
     /**
      * Get all shapes.
+     *
      * @return ArrayList<Shape>
      */
     public ArrayList<Shape> getShapes() {
@@ -19,6 +20,7 @@ abstract public class ShapeDAO {
 
     /**
      * Set the shapes.
+     *
      * @param shapes ArrayList<Shape>
      */
     public void setShapes(ArrayList<Shape> shapes) {
@@ -26,19 +28,29 @@ abstract public class ShapeDAO {
     }
 
     /**
+     * Set the config needed for the DAO.
+     *
+     * @param config
+     */
+    abstract public void setConfig(Config config) throws DAOException;
+
+    /**
      * Save the shapes.
+     *
      * @return boolean
      */
     abstract public boolean save() throws DAOException;
 
     /**
      * Load shapes.
+     *
      * @return ArrayList<Shape>
      */
     abstract public boolean load() throws DAOException;
 
     /**
      * Delete shapes.
+     *
      * @return boolean
      */
     abstract public boolean delete() throws DAOException;

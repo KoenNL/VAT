@@ -7,7 +7,6 @@ import DataStorage.DAOException;
 import DataStorage.FileShapeDAO;
 import DataStorage.MySQLShapeDAO;
 import Domain.Shape;
-import Main.Config;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -57,15 +56,13 @@ public class OverviewButtonHandler implements ActionListener {
      */
     private void saveShapes() {
         try {
-            this.overviewPanel.getShapeManager().setDAO(new MySQLShapeDAO(new Config()));
+            this.overviewPanel.getShapeManager().setDAO(new MySQLShapeDAO());
 
             if (this.overviewPanel.getShapeManager().save()) {
                 this.overviewPanel.setInfo("Shapes saved", OverviewPanel.INFO_SUCCESS);
             } else {
                 this.overviewPanel.setInfo("Shapes not saved", OverviewPanel.INFO_WARNING);
             }
-        } catch (DAOException exception) {
-            ExceptionHandler.handleException(exception.getException(), exception.getFriendlyMessage());
         } catch (BusinessLogicException exception) {
             this.overviewPanel.setInfo("Unable to save shapes", OverviewPanel.INFO_DANGER);
         }
@@ -77,7 +74,7 @@ public class OverviewButtonHandler implements ActionListener {
     private void loadShapes() {
         try {
             if (this.overviewPanel.getShapeManager().getDAOType() == null) {
-                this.overviewPanel.getShapeManager().setDAO(new MySQLShapeDAO(new Config()));
+                this.overviewPanel.getShapeManager().setDAO(new MySQLShapeDAO());
             }
             if (this.overviewPanel.getShapeManager().load()) {
                 this.overviewPanel.setInfo("Shapes loaded", OverviewPanel.INFO_SUCCESS);
@@ -85,8 +82,6 @@ public class OverviewButtonHandler implements ActionListener {
             } else {
                 this.overviewPanel.setInfo("No shapes loaded", OverviewPanel.INFO_INFO);
             }
-        } catch (DAOException exception) {
-            ExceptionHandler.handleException(exception.getException(), exception.getFriendlyMessage());
         } catch (BusinessLogicException exception) {
             this.overviewPanel.setInfo(exception.getFriendlyMessage(), OverviewPanel.INFO_DANGER);
         }

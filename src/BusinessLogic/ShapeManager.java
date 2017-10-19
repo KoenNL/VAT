@@ -3,6 +3,7 @@ package BusinessLogic;
 import DataStorage.DAOException;
 import DataStorage.ShapeDAO;
 import Domain.Shape;
+import Main.Config;
 
 import java.util.ArrayList;
 
@@ -11,8 +12,9 @@ public class ShapeManager {
     private ArrayList<Shape> shapes;
     private ArrayList<String> shapeTypes;
     private ShapeDAO DAO;
+    private Config config;
 
-    public ShapeManager() {
+    public ShapeManager(Config config) {
         this.shapeTypes = new ArrayList<String>();
         this.shapeTypes.add("Sphere");
         this.shapeTypes.add("Cylinder");
@@ -21,6 +23,8 @@ public class ShapeManager {
         this.shapeTypes.add("SquarePyramid");
 
         this.shapes = new ArrayList<Shape>();
+
+        this.config = config;
     }
 
     /**
@@ -59,8 +63,17 @@ public class ShapeManager {
      *
      * @param DAO ShapeDAO
      */
-    public void setDAO(ShapeDAO DAO) {
-        this.DAO = DAO;
+    public void setDAO(ShapeDAO DAO) throws BusinessLogicException {
+        try {
+            this.DAO = DAO;
+            this.DAO.setConfig(this.config);
+        } catch (DAOException exception) {
+            System.out.println(config.getDatabaseHost());
+            System.out.println(config.getDatabaseName());
+            System.out.println(config.getDatabasePassword());
+            System.out.println(config.getDatabaseUser());
+            throw new BusinessLogicException("Invalid config", exception);
+        }
     }
 
     /**

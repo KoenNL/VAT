@@ -1,6 +1,7 @@
 package BusinessLogic;
 
 import Domain.*;
+import Main.Config;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -8,7 +9,7 @@ import static org.junit.Assert.*;
 public class ShapeManagerTest {
     @Test
     public void calculateTotalVolume() throws Exception {
-        ShapeManager shapeManager = new ShapeManager();
+        ShapeManager shapeManager = new ShapeManager(new Config());
         assertEquals(0.0, shapeManager.calculateTotalVolume(), 0.00001);
 
         Sphere sphere = new Sphere(2.0);

@@ -1,0 +1,5 @@
+databaseHost=localhost
+databaseName=VAT
+databaseUser=root
+databasePassword=root
+debug=false

@@ -1,6 +1,7 @@
 package DataStorage;
 
 import Domain.*;
+import Main.Config;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -34,6 +35,11 @@ public class FileShapeDAO extends ShapeDAO {
             extension = s.substring(i + 1).toLowerCase();
         }
         return extension;
+    }
+
+    @Override
+    public void setConfig(Config config) throws DAOException {
+
     }
 
     @Override

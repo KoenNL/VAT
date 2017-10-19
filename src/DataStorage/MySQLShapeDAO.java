@@ -10,7 +10,7 @@ public class MySQLShapeDAO extends ShapeDAO {
 
     private Connection connection;
 
-    public MySQLShapeDAO(Config config) throws DAOException {
+    public void setConfig(Config config) throws DAOException {
         try {
             this.connection = DriverManager.getConnection(
                     "jdbc:mysql://" + config.getDatabaseHost() + ":3306/" + config.getDatabaseName(),
