@@ -23,7 +23,12 @@ public class MySQLShapeDAO extends ShapeDAO {
 
     @Override
     public boolean save() throws DAOException {
+        if (this.shapes.size() == 0) {
+            return false;
+        }
+
         this.delete();
+
         try {
             String sql = "INSERT INTO `Shape` (`id`, `type`, `radius`, `length`, `width`, `height`) VALUES(?, ?, ?, ?, ?, ?);";
 
@@ -34,6 +39,7 @@ public class MySQLShapeDAO extends ShapeDAO {
                 statement.execute();
             }
         } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
             throw new DAOException("Could not save shapes to database", exception);
         }
 

@@ -28,16 +28,12 @@ public class ShapeManager {
     }
 
     /**
-     * Add a shape to the manager and set it's id if it doesn't have one.
+     * Add a shape to the manager and set it's id.
      *
      * @param shape Shape
      */
     public void addShape(Shape shape) {
         this.shapes.add(shape);
-
-        if (shape.getId() == 0) {
-            shape.setId(this.shapes.indexOf(shape) + 1);
-        }
     }
 
     /**
@@ -74,18 +70,6 @@ public class ShapeManager {
             System.out.println(config.getDatabaseUser());
             throw new BusinessLogicException("Invalid config", exception);
         }
-    }
-
-    /**
-     * Get the type of loaded DAO. If no DAO is loaded null is returned.
-     *
-     * @return String
-     */
-    public String getDAOType() {
-        if (this.DAO == null) {
-            return null;
-        }
-        return this.DAO.getClass().getSimpleName();
     }
 
     /**
