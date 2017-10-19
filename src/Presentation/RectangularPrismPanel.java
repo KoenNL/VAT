@@ -23,7 +23,8 @@ public class RectangularPrismPanel extends ShapePanel {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new Insets(10, 10, 0, 0);;
+        gridBagConstraints.insets = new Insets(10, 10, 0, 0);
+        ;
         gridBagConstraints.weightx = 1;
         this.add(this.lengthLabel, gridBagConstraints);
 
@@ -34,7 +35,8 @@ public class RectangularPrismPanel extends ShapePanel {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new Insets(10, 0, 0, 0);;
+        gridBagConstraints.insets = new Insets(10, 0, 0, 0);
+        ;
         gridBagConstraints.weightx = 1;
         this.add(this.lengthField, gridBagConstraints);
 
@@ -45,7 +47,8 @@ public class RectangularPrismPanel extends ShapePanel {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new Insets(10, 10, 0, 0);;
+        gridBagConstraints.insets = new Insets(10, 10, 0, 0);
+        ;
         gridBagConstraints.weightx = 1;
         this.add(this.widthLabel, gridBagConstraints);
 
@@ -56,10 +59,11 @@ public class RectangularPrismPanel extends ShapePanel {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new Insets(10, 0, 0, 0);;
+        gridBagConstraints.insets = new Insets(10, 0, 0, 0);
+        ;
         gridBagConstraints.weightx = 1;
         this.add(this.widthField, gridBagConstraints);
-        
+
         // Create height label
         this.heightLabel = new JLabel("Height");
         this.heightLabel.setHorizontalAlignment(JLabel.LEFT);
@@ -67,7 +71,8 @@ public class RectangularPrismPanel extends ShapePanel {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.insets = new Insets(10, 10, 0, 0);;
+        gridBagConstraints.insets = new Insets(10, 10, 0, 0);
+        ;
         gridBagConstraints.weightx = 1;
         this.add(this.heightLabel, gridBagConstraints);
 
@@ -78,24 +83,17 @@ public class RectangularPrismPanel extends ShapePanel {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.insets = new Insets(10, 0, 0, 0);;
+        gridBagConstraints.insets = new Insets(10, 0, 0, 0);
+        ;
         gridBagConstraints.weightx = 1;
         this.add(this.heightField, gridBagConstraints);
     }
 
     @Override
     public Shape toShape() {
-        if (this.shape == null) {
-            this.shape = new RectangularPrism(
-                    Double.parseDouble(this.lengthField.getText().replace(',', '.')),
-                    Double.parseDouble(this.widthField.getText().replace(',', '.')),
-                    Double.parseDouble(this.heightField.getText().replace(',', '.'))
-            );
-        } else {
-            this.shape.setLength(Double.parseDouble(this.lengthField.getText().replace(',', '.')));
-            this.shape.setWidth(Double.parseDouble(this.widthField.getText().replace(',', '.')));
-            this.shape.setHeight(Double.parseDouble(this.heightField.getText().replace(',', '.')));
-        }
+        this.shape.setLength(Double.parseDouble(this.lengthField.getText().replace(',', '.')));
+        this.shape.setWidth(Double.parseDouble(this.widthField.getText().replace(',', '.')));
+        this.shape.setHeight(Double.parseDouble(this.heightField.getText().replace(',', '.')));
 
         return this.shape;
     }

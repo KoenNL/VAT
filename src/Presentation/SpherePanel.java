@@ -24,7 +24,8 @@ public class SpherePanel extends ShapePanel {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new Insets(10, 10, 0, 0);;
+        gridBagConstraints.insets = new Insets(10, 10, 0, 0);
+        ;
         gridBagConstraints.weightx = 1;
         this.add(this.radiusLabel, gridBagConstraints);
 
@@ -35,18 +36,15 @@ public class SpherePanel extends ShapePanel {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new Insets(10, 0, 0, 0);;
+        gridBagConstraints.insets = new Insets(10, 0, 0, 0);
+        ;
         gridBagConstraints.weightx = 1;
         this.add(this.radiusField, gridBagConstraints);
     }
 
     @Override
     public Shape toShape() {
-        if (this.shape == null) {
-            this.shape = new Sphere(Double.parseDouble(this.radiusField.getText().replace(',', '.')));
-        } else {
-            this.shape.setRadius(Double.parseDouble(this.radiusField.getText().replace(',', '.')));
-        }
+        this.shape.setRadius(Double.parseDouble(this.radiusField.getText().replace(',', '.')));
 
         return this.shape;
     }

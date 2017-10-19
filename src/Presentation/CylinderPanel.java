@@ -24,7 +24,8 @@ public class CylinderPanel extends ShapePanel {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new Insets(10, 10, 0, 0);;
+        gridBagConstraints.insets = new Insets(10, 10, 0, 0);
+        ;
         gridBagConstraints.weightx = 1;
         this.add(this.radiusLabel, gridBagConstraints);
 
@@ -35,7 +36,8 @@ public class CylinderPanel extends ShapePanel {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new Insets(10, 0, 0, 0);;
+        gridBagConstraints.insets = new Insets(10, 0, 0, 0);
+        ;
         gridBagConstraints.weightx = 1;
         this.add(this.radiusField, gridBagConstraints);
 
@@ -46,7 +48,8 @@ public class CylinderPanel extends ShapePanel {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new Insets(10, 10, 0, 0);;
+        gridBagConstraints.insets = new Insets(10, 10, 0, 0);
+        ;
         gridBagConstraints.weightx = 1;
         this.add(this.heightLabel, gridBagConstraints);
 
@@ -57,22 +60,16 @@ public class CylinderPanel extends ShapePanel {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new Insets(10, 0, 0, 0);;
+        gridBagConstraints.insets = new Insets(10, 0, 0, 0);
+        ;
         gridBagConstraints.weightx = 1;
         this.add(this.heightField, gridBagConstraints);
     }
 
     @Override
     public Shape toShape() {
-        if (this.shape == null) {
-            this.shape = new Cylinder(
-                    Double.parseDouble(this.radiusField.getText().replace(',', '.')),
-                    Double.parseDouble(this.heightField.getText().replace(',', '.'))
-            );
-        } else {
-            this.shape.setRadius(Double.parseDouble(this.radiusField.getText().replace(',', '.')));
-            this.shape.setHeight(Double.parseDouble(this.heightField.getText().replace(',', '.')));
-        }
+        this.shape.setRadius(Double.parseDouble(this.radiusField.getText().replace(',', '.')));
+        this.shape.setHeight(Double.parseDouble(this.heightField.getText().replace(',', '.')));
 
         return this.shape;
     }

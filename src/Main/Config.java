@@ -7,6 +7,8 @@ public class Config {
             databaseUser = "root",
             databasePassword = "root";
 
+
+
     /**
      * Get the database host.
      *
